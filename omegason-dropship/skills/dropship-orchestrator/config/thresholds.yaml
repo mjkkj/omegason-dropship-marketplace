@@ -1,0 +1,29 @@
+# ============================================================
+# NGUỒN SỰ THẬT DUY NHẤT cho mọi ngưỡng quyết định.
+# Mọi Decision Gate trong workflows/ tham chiếu file này.
+# Sửa tại đây => áp dụng toàn hệ thống. KHÔNG hardcode số trong workflow.
+# Owner: Human (Human Approver). Cập nhật lần cuối: 2026-07-10
+# ============================================================
+
+economics:
+  min_gross_margin_pct: 60      # Margin tối thiểu (giá bán - landed cost) / giá bán, trước chi phí ads
+  min_roas: 1.4                 # ROAS tối thiểu để KEEP campaign
+  scale_roas: 1.6               # ROAS từ mức này trở lên => đề xuất SCALE
+  # LƯU Ý NHẤT QUÁN: với margin 60%, breakeven ROAS lý thuyết = 1/0.60 ≈ 1.67.
+  # min_roas 1.4 và scale_roas 1.6 nằm DƯỚI mức hòa vốn này — chỉ hợp lý nếu
+  # chủ đích chấp nhận hòa/lỗ nhẹ đơn đầu để lấy data hoặc LTV.
+  # Agent phải luôn tính contribution thực tế và nêu rõ trong Decision Record.
+
+testing:
+  default_test_budget_usd: 500  # Ngân sách test mặc định cho 1 sản phẩm
+  kill_rule: "KILL khi tổng spend >= 5 x AOV mà chưa có sale nào"
+  kill_spend_aov_multiplier: 5
+
+scaling:
+  # Đề xuất mặc định — Human có thể chỉnh:
+  scale_step_pct: 20            # Mỗi lần scale tăng budget tối đa 20%, cách nhau >= 48h
+  min_purchases_before_scale: 5 # Không scale khi chưa đủ 5 purchases (tránh premature scale)
+
+review:
+  daily_check: true             # Workflow 08 chạy mỗi ngày khi có campaign live
+  decision_review_after_spend_usd: 100  # Đủ spend này mới đưa vào Kill-Keep-Scale (trừ khi chạm kill_rule sớm hơn)

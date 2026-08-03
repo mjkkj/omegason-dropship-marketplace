@@ -1,0 +1,546 @@
+<!-- ============================================================
+  PassionPlay Intimate Set — PDP Description (v3 — editorial)
+  Drop-in: Shopify Product → Description → Show HTML → paste
+  Mobile-first, full-bleed editorial, scoped under .pdp-edx
+  Uses real product images from lacynighty.net CDN
+============================================================ -->
+<style>
+  .pdp-edx{
+    --ink:#0e0608;--paper:#f6efe8;--cream:#ede2d6;--wine:#7a1f2b;
+    --blush:#d9b3ae;--rose:#b07a7a;--line:rgba(14,6,8,.10);
+    --muted:#6b5b5e;--gold:#a88458;
+    --serif:'Cormorant Garamond','Playfair Display',Didot,Georgia,serif;
+    --sans:'Inter',-apple-system,system-ui,'Segoe UI',Roboto,sans-serif;
+    font-family:var(--sans);color:var(--ink);background:var(--paper);
+    margin:0 auto;padding:0;line-height:1.6;letter-spacing:.005em;
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+    width:100%;max-width:none;
+  }
+  .pdp-edx *,.pdp-edx *::before,.pdp-edx *::after{box-sizing:border-box;}
+  .pdp-edx img{display:block;max-width:100%;height:auto;}
+
+  .pdp-edx .wrap{max-width:1200px;margin:0 auto;}
+  .pdp-edx .inner{max-width:760px;margin:0 auto;padding:0 22px;}
+  @media(min-width:640px){.pdp-edx .inner{padding:0 32px;}}
+
+  /* TYPE */
+  .pdp-edx .eyebrow{
+    font-size:10px;letter-spacing:.32em;text-transform:uppercase;
+    color:var(--wine);font-weight:600;margin:0 0 14px;
+  }
+  .pdp-edx h2.display{
+    font-family:var(--serif);
+    font-size:clamp(30px,7.4vw,68px);line-height:1.05;
+    margin:0 0 18px;font-weight:400;letter-spacing:-.015em;
+    word-wrap:break-word;hyphens:auto;
+  }
+  .pdp-edx h2.display em{font-style:italic;color:var(--wine);}
+  .pdp-edx h3.k{
+    font-family:var(--serif);
+    font-size:clamp(26px,5.6vw,40px);line-height:1.1;
+    font-weight:400;margin:0 0 14px;letter-spacing:-.01em;
+  }
+  .pdp-edx h3.k em{font-style:italic;color:var(--wine);}
+  .pdp-edx .label{
+    font-family:var(--sans);font-size:11px;letter-spacing:.26em;
+    text-transform:uppercase;color:var(--ink);font-weight:600;
+    margin:0 0 12px;
+  }
+  .pdp-edx p{font-size:15.5px;line-height:1.65;color:var(--ink);margin:0 0 14px;}
+  @media(min-width:640px){.pdp-edx p{font-size:16.5px;}}
+  .pdp-edx p.lead{
+    font-family:var(--serif);font-style:italic;
+    font-size:clamp(18px,3.6vw,22px);line-height:1.45;
+    color:var(--muted);margin:0 auto;max-width:34ch;
+  }
+  .pdp-edx .rule{
+    width:48px;height:1px;background:var(--wine);
+    margin:22px auto;border:0;
+  }
+
+  /* SECTION */
+  .pdp-edx section{position:relative;}
+
+  /* ============================================
+     1 · COVER
+  ============================================ */
+  .pdp-edx .cover{
+    background:var(--paper);
+    padding:56px 0 40px;text-align:center;
+  }
+  @media(min-width:768px){.pdp-edx .cover{padding:88px 0 64px;}}
+  .pdp-edx .cover .mark{
+    font-family:var(--serif);font-style:italic;font-size:13px;
+    letter-spacing:.18em;color:var(--gold);margin-bottom:24px;
+  }
+
+  /* ============================================
+     2 · HERO IMAGE (full-bleed)
+  ============================================ */
+  .pdp-edx .hero-img{
+    position:relative;overflow:hidden;background:var(--ink);
+    aspect-ratio: 4 / 5;
+  }
+  @media(min-width:768px){.pdp-edx .hero-img{aspect-ratio:16/9;max-height:720px;}}
+  .pdp-edx .hero-img img{
+    width:100%;height:100%;object-fit:cover;object-position:center;
+  }
+  .pdp-edx .hero-img .caption{
+    position:absolute;left:0;right:0;bottom:0;
+    padding:20px 22px;color:#fff;
+    background:linear-gradient(180deg,transparent 0%,rgba(0,0,0,.7) 100%);
+    font-family:var(--serif);font-style:italic;font-size:15px;
+    letter-spacing:.02em;text-align:left;
+  }
+  @media(min-width:768px){
+    .pdp-edx .hero-img .caption{padding:32px 40px;font-size:17px;}
+  }
+
+  /* ============================================
+     3 · INTRO BLOCK (after hero)
+  ============================================ */
+  .pdp-edx .intro{padding:56px 0 40px;background:var(--paper);text-align:center;}
+  @media(min-width:768px){.pdp-edx .intro{padding:80px 0 56px;}}
+
+  /* ============================================
+     4 · WHAT'S INSIDE — editorial grid w/ image
+  ============================================ */
+  .pdp-edx .inside{background:var(--cream);padding:56px 0;}
+  @media(min-width:768px){.pdp-edx .inside{padding:88px 0;}}
+  .pdp-edx .inside-head{text-align:center;margin-bottom:36px;padding:0 22px;}
+  .pdp-edx .inside-feature{
+    margin:0 auto 36px;max-width:1200px;
+    position:relative;aspect-ratio:3/4;overflow:hidden;background:#111;
+  }
+  @media(min-width:768px){
+    .pdp-edx .inside-feature{aspect-ratio:16/10;max-height:640px;margin-bottom:56px;}
+  }
+  .pdp-edx .inside-feature img{
+    width:100%;height:100%;object-fit:cover;object-position:center;
+  }
+  .pdp-edx .inside-grid{
+    display:grid;gap:1px;background:var(--line);
+    grid-template-columns:1fr;max-width:1200px;margin:0 auto;
+    border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  }
+  @media(min-width:600px){.pdp-edx .inside-grid{grid-template-columns:1fr 1fr;}}
+  @media(min-width:960px){.pdp-edx .inside-grid{grid-template-columns:repeat(3,1fr);}}
+  .pdp-edx .piece{
+    background:var(--cream);padding:32px 26px;
+    position:relative;min-height:200px;
+  }
+  .pdp-edx .piece .n{
+    font-family:var(--serif);font-style:italic;font-size:14px;
+    color:var(--wine);letter-spacing:.14em;margin-bottom:14px;
+    display:block;
+  }
+  .pdp-edx .piece h4{
+    font-family:var(--serif);font-size:26px;line-height:1.1;
+    margin:0 0 10px;font-weight:400;
+  }
+  .pdp-edx .piece p{
+    font-size:14.5px;color:var(--muted);line-height:1.6;margin:0;
+  }
+
+  /* ============================================
+     5 · QUOTE / TESTIMONIAL EDITORIAL
+  ============================================ */
+  .pdp-edx .quote{
+    background:var(--paper);padding:64px 0;text-align:center;
+  }
+  @media(min-width:768px){.pdp-edx .quote{padding:96px 0;}}
+  .pdp-edx .quote q{
+    quotes:none;font-family:var(--serif);font-style:italic;
+    font-size:clamp(22px,5vw,34px);line-height:1.3;
+    color:var(--ink);display:block;max-width:24ch;margin:0 auto 22px;
+    font-weight:400;
+  }
+  .pdp-edx .quote q::before{content:"\201C";color:var(--wine);}
+  .pdp-edx .quote q::after{content:"\201D";color:var(--wine);}
+  .pdp-edx .quote cite{
+    font-style:normal;font-family:var(--sans);font-size:11px;
+    letter-spacing:.24em;text-transform:uppercase;color:var(--muted);
+  }
+
+  /* ============================================
+     6 · TWO-IMAGE EDITORIAL SPLIT
+  ============================================ */
+  .pdp-edx .split{
+    display:grid;grid-template-columns:1fr;gap:1px;background:var(--paper);
+  }
+  @media(min-width:768px){.pdp-edx .split{grid-template-columns:1fr 1fr;}}
+  .pdp-edx .split .panel{
+    background:var(--paper);padding:48px 22px;
+    display:flex;flex-direction:column;justify-content:center;
+  }
+  @media(min-width:768px){.pdp-edx .split .panel{padding:72px 48px;}}
+  .pdp-edx .split .panel.img{padding:0;background:var(--ink);}
+  .pdp-edx .split .panel.img img{
+    width:100%;height:100%;object-fit:cover;min-height:340px;
+  }
+  @media(min-width:768px){.pdp-edx .split .panel.img img{min-height:540px;}}
+
+  /* ============================================
+     7 · DESIGN + MATERIALS spec
+  ============================================ */
+  .pdp-edx .spec{background:var(--cream);padding:56px 0;}
+  @media(min-width:768px){.pdp-edx .spec{padding:88px 0;}}
+  .pdp-edx .spec-head{text-align:center;margin-bottom:32px;}
+  .pdp-edx .duo{
+    display:grid;gap:32px;grid-template-columns:1fr;
+    max-width:760px;margin:0 auto;padding:0 22px;
+  }
+  @media(min-width:720px){.pdp-edx .duo{grid-template-columns:1fr 1fr;gap:48px;}}
+  .pdp-edx .duo h4{
+    font-family:var(--sans);font-size:11px;letter-spacing:.26em;
+    text-transform:uppercase;color:var(--wine);font-weight:600;
+    margin:0 0 16px;padding-bottom:14px;border-bottom:1px solid var(--line);
+  }
+  .pdp-edx .duo ul{list-style:none;padding:0;margin:0;}
+  .pdp-edx .duo li{
+    padding:12px 0;border-bottom:1px solid var(--line);
+    display:flex;justify-content:space-between;align-items:baseline;
+    gap:14px;font-size:14.5px;
+  }
+  @media(min-width:640px){.pdp-edx .duo li{font-size:15.5px;}}
+  .pdp-edx .duo li:last-child{border-bottom:0;}
+  .pdp-edx .duo .k{color:var(--muted);flex-shrink:0;}
+  .pdp-edx .duo .v{
+    color:var(--ink);font-weight:500;text-align:right;
+    font-family:var(--serif);font-size:17px;font-style:italic;
+  }
+
+  /* ============================================
+     8 · PRIVACY / TRUST — black editorial
+  ============================================ */
+  .pdp-edx .trust{
+    background:var(--ink);color:var(--paper);
+    padding:64px 0;text-align:center;
+  }
+  @media(min-width:768px){.pdp-edx .trust{padding:96px 0;}}
+  .pdp-edx .trust .eyebrow{color:var(--blush);}
+  .pdp-edx .trust h3.k{color:var(--paper);}
+  .pdp-edx .trust h3.k em{color:var(--blush);}
+  .pdp-edx .trust .row{
+    display:grid;gap:36px;margin-top:36px;
+    grid-template-columns:1fr;padding:0 22px;
+    max-width:1000px;margin-left:auto;margin-right:auto;
+  }
+  @media(min-width:640px){
+    .pdp-edx .trust .row{grid-template-columns:repeat(3,1fr);gap:32px;margin-top:48px;}
+  }
+  .pdp-edx .trust .b{padding:0 8px;}
+  .pdp-edx .trust .ico{
+    font-family:var(--serif);font-style:italic;font-size:36px;
+    color:var(--blush);display:block;margin-bottom:14px;line-height:1;
+    letter-spacing:.04em;
+  }
+  .pdp-edx .trust .bt{
+    font-size:10px;letter-spacing:.26em;text-transform:uppercase;
+    color:var(--blush);margin:0 0 10px;font-weight:600;
+  }
+  .pdp-edx .trust .bv{
+    font-family:var(--serif);font-style:italic;font-size:16.5px;
+    line-height:1.5;color:var(--paper);margin:0;
+    max-width:30ch;margin-left:auto;margin-right:auto;
+  }
+  .pdp-edx .trust .bv strong{font-style:normal;color:var(--blush);font-weight:500;}
+
+  /* ============================================
+     9 · BONUS — editorial card
+  ============================================ */
+  .pdp-edx .bonus{
+    background:var(--paper);padding:64px 0;text-align:center;
+  }
+  @media(min-width:768px){.pdp-edx .bonus{padding:96px 0;}}
+  .pdp-edx .bonus .card{
+    max-width:520px;margin:0 auto;padding:48px 28px;
+    border:1px solid var(--line);background:#fff;position:relative;
+  }
+  .pdp-edx .bonus .card::before,
+  .pdp-edx .bonus .card::after{
+    content:"";position:absolute;width:32px;height:32px;
+    border:1px solid var(--wine);
+  }
+  .pdp-edx .bonus .card::before{top:-1px;left:-1px;border-right:0;border-bottom:0;}
+  .pdp-edx .bonus .card::after{bottom:-1px;right:-1px;border-left:0;border-top:0;}
+  .pdp-edx .bonus .gift{
+    font-family:var(--serif);font-style:italic;font-size:13px;
+    color:var(--gold);letter-spacing:.18em;text-transform:uppercase;
+    margin:0 0 12px;font-weight:400;
+  }
+  .pdp-edx .bonus .et{
+    font-family:var(--serif);font-size:clamp(26px,5.6vw,36px);
+    margin:0 0 16px;font-weight:400;line-height:1.1;font-style:italic;
+  }
+  .pdp-edx .bonus .ed{
+    font-size:15px;color:var(--muted);max-width:40ch;
+    margin:0 auto 22px;line-height:1.6;
+  }
+  .pdp-edx .bonus .val{
+    display:inline-block;color:var(--wine);font-size:11px;
+    letter-spacing:.26em;text-transform:uppercase;font-weight:600;
+    padding-top:14px;border-top:1px solid var(--line);
+  }
+
+  /* ============================================
+     10 · FAQ
+  ============================================ */
+  .pdp-edx .faq{background:var(--cream);padding:64px 0;}
+  @media(min-width:768px){.pdp-edx .faq{padding:96px 0;}}
+  .pdp-edx .faq-head{text-align:center;margin-bottom:36px;}
+  .pdp-edx .faq-list{max-width:680px;margin:0 auto;padding:0 22px;}
+  .pdp-edx .faq details{border-bottom:1px solid var(--line);}
+  .pdp-edx .faq details:first-of-type{border-top:1px solid var(--line);}
+  .pdp-edx .faq summary{
+    font-family:var(--serif);font-size:19px;line-height:1.35;
+    cursor:pointer;list-style:none;position:relative;
+    padding:20px 40px 20px 0;font-weight:400;min-height:44px;
+  }
+  @media(min-width:640px){.pdp-edx .faq summary{font-size:22px;}}
+  .pdp-edx .faq summary::-webkit-details-marker{display:none;}
+  .pdp-edx .faq summary::after{
+    content:"+";position:absolute;right:0;top:50%;
+    transform:translateY(-50%);font-size:26px;color:var(--wine);
+    font-weight:300;line-height:1;
+  }
+  .pdp-edx .faq details[open] summary::after{content:"\2013";}
+  .pdp-edx .faq details>p{
+    margin:0 0 22px;color:var(--muted);font-size:15px;
+    line-height:1.7;max-width:62ch;
+  }
+
+  /* ============================================
+     11 · CLOSING
+  ============================================ */
+  .pdp-edx .close{
+    background:var(--paper);padding:72px 22px 56px;text-align:center;
+  }
+  @media(min-width:768px){.pdp-edx .close{padding:112px 22px 80px;}}
+  .pdp-edx .close .k{
+    font-family:var(--serif);font-style:italic;
+    font-size:clamp(22px,5.4vw,32px);line-height:1.35;
+    max-width:22ch;margin:0 auto 18px;color:var(--ink);
+  }
+  .pdp-edx .close .sig{
+    font-family:var(--serif);font-style:italic;font-size:17px;
+    color:var(--wine);letter-spacing:.06em;
+  }
+  .pdp-edx .close .dot{
+    width:5px;height:5px;background:var(--wine);border-radius:50%;
+    display:inline-block;margin:0 10px;vertical-align:middle;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .pdp-edx *{transition:none!important;}
+  }
+</style>
+
+<div class=.pdp-edx">
+
+  <!-- 1 — COVER -->
+  <section class="cover">
+    <div class="inner">
+      <div class="mark">{{BRAND_MARK}}</div>
+      <p class="eyebrow">{{COLLECTION_EYEBROW}}</p>
+      <h2 class="display">{{DISPLAY_HEADLINE}}</h2>
+      <hr class="rule"/>
+      <p class="lead">{{LEAD_TAGLINE}}</p>
+    </div>
+  </section>
+
+  <!-- 2 — HERO IMAGE -->
+  <section class="hero-img">
+    <img src="{{HERO_IMG_URL}}"
+         alt="{{HERO_IMG_ALT}}"
+         loading="eager" />
+    <div class="caption">{{HERO_CAPTION}}</div>
+  </section>
+
+  <!-- 3 — INTRO -->
+  <section class="intro">
+    <div class="inner">
+      <p class="eyebrow">The brief</p>
+      <h3 class="k">Most lingerie ends at the photo.<br/><em>This set was made for what happens after.</em></h3>
+      <p>Soft enough for first-time play. Complete enough for the ones who already know what they like. Every piece was chosen so nothing has to be improvised — the night unfolds on its own.</p>
+    </div>
+  </section>
+
+  <!-- 4 — WHAT'S INSIDE -->
+  <section class="inside">
+    <div class="inside-head">
+      <p class="eyebrow">What's in the box</p>
+      <h3 class="k"><em>Five</em> carefully chosen pieces</h3>
+    </div>
+
+    <div class="inside-feature">
+      <img src="https://www.lacynighty.net/cdn/shop/files/2_fbec78b7-2db1-499e-8315-de8a5d9a2078.png?v=1760807905&width=1945"
+           alt="{{COLLECTION_EYEBROW}} — full collection laid out"
+           loading="lazy" />
+    </div>
+
+    <div class="inside-grid">
+      <div class="piece">
+        <span class="n">— No. 01</span>
+        <h4>Bandage Belt</h4>
+        <p>Adjustable restraint belt with six anchor points. The piece that turns curiosity into choreography.</p>
+      </div>
+      <div class="piece">
+        <span class="n">— No. 02</span>
+        <h4>Leg Spreader</h4>
+        <p>Open-crotch design with soft padding. Adjusts to her comfort, holds the position you both want.</p>
+      </div>
+      <div class="piece">
+        <span class="n">— No. 03</span>
+        <h4>Neck Pillow</h4>
+        <p>Padded support for longer moments. The detail that proves this set was designed by people who use it.</p>
+      </div>
+      <div class="piece">
+        <span class="n">— No. 04</span>
+        <h4>Hand Cuffs</h4>
+        <p>Vegan leather outside, satin lining inside. No pinching, no red marks the next morning.</p>
+      </div>
+      <div class="piece">
+        <span class="n">— No. 05</span>
+        <h4>Ankle Cuffs</h4>
+        <p>Matched to the hand cuffs. Quick-release clasp — because consent should be one motion away.</p>
+      </div>
+      <div class="piece" style="background:var(--ink);color:var(--paper);">
+        <span class="n" style="color:var(--blush);">— Plus</span>
+        <h4 style="color:var(--paper);"><em>The Guidebook</em></h4>
+        <p style="color:var(--blush);">A 101-position illustrated companion, sent digitally the moment you order. So tonight already has a roadmap.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 — QUOTE -->
+  <section class="quote">
+    <div class="inner">
+      <q>I got this for our anniversary, and it made the night unforgettable.</q>
+      <cite>— Verified buyer · ★ ★ ★ ★ ★</cite>
+    </div>
+  </section>
+
+  <!-- 6 — SPLIT (image / text) -->
+  <section class="split">
+    <div class="panel img">
+      <img src="https://www.lacynighty.net/cdn/shop/files/1_e571f56f-a60a-4a70-b776-1042536f7114.png?v=1760807910&width=1346"
+           alt="PassionPlay detail" loading="lazy"/>
+    </div>
+    <div class="panel">
+      <p class="eyebrow">Designed for her, with you in mind</p>
+      <h3 class="k">Comfort is <em>the seduction.</em></h3>
+      <p>Hardware that doesn't catch hair. Lining that doesn't burn skin. Buckles that release in a single motion. We obsessed over the boring parts so nothing pulls either of you out of the moment.</p>
+      <p style="color:var(--muted);font-size:14.5px;">Tested, refined, and packed by a team that has done this for over 40,000 couples.</p>
+    </div>
+  </section>
+
+  <!-- 7 — DESIGN + MATERIALS -->
+  <section class="spec">
+    <div class="spec-head">
+      <p class="eyebrow">Crafted, not assembled</p>
+      <h3 class="k">Design <em>&amp;</em> Materials</h3>
+    </div>
+    <div class="duo">
+      <div>
+        <h4>Design</h4>
+        <ul>
+          <li><span class="k">Fit</span><span class="v">Adjustable</span></li>
+          <li><span class="k">Belt range</span><span class="v">24" – 42"</span></li>
+          <li><span class="k">Closure</span><span class="v">Quick-release</span></li>
+          <li><span class="k">Wearer</span><span class="v">For her</span></li>
+          <li><span class="k">Best for</span><span class="v">Anniversary · Honeymoon</span></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Materials</h4>
+        <ul>
+          <li><span class="k">Outer</span><span class="v">Vegan leather</span></li>
+          <li><span class="k">Lining</span><span class="v">Soft satin</span></li>
+          <li><span class="k">Hardware</span><span class="v">Nickel-free</span></li>
+          <li><span class="k">Care</span><span class="v">Damp cloth</span></li>
+          <li><span class="k">Storage</span><span class="v">Drawstring pouch</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8 — PRIVACY / TRUST -->
+  <section class="trust">
+    <div class="inner">
+      <p class="eyebrow">Discreet by design</p>
+      <h3 class="k">Your moment <em>stays yours.</em></h3>
+    </div>
+    <div class="row">
+      <div class="b">
+        <span class="ico">i.</span>
+        <p class="bt">Unmarked box</p>
+        <p class="bv">Plain exterior. No logo, no labels, no clue what's inside.</p>
+      </div>
+      <div class="b">
+        <span class="ico">ii.</span>
+        <p class="bt">Discreet billing</p>
+        <p class="bv">Appears on your statement as <strong>"LN Goods"</strong> — never the product name.</p>
+      </div>
+      <div class="b">
+        <span class="ico">iii.</span>
+        <p class="bt">Quiet returns</p>
+        <p class="bv">30 days. No questions. Refund in 3 business days.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9 — BONUS -->
+  <section class="bonus">
+    <div class="inner">
+      <div class="card">
+        <p class="gift">Included today, free</p>
+        <p class="et">101 Hot Positions</p>
+        <p class="ed">An illustrated digital guide — delivered the moment you order, before your set even ships.</p>
+        <span class="val">$20 value · yours with this set</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 — FAQ -->
+  <section class="faq">
+    <div class="faq-head">
+      <p class="eyebrow">Before you ask</p>
+      <h3 class="k">A few honest answers</h3>
+    </div>
+    <div class="faq-list">
+      <details>
+        <summary>Is this beginner-friendly?</summary>
+        <p>Entirely. Everything is soft-lined, quick-release, and adjustable. Most customers tell us this is their first set. The included guide walks you through positions at three comfort levels.</p>
+      </details>
+      <details>
+        <summary>Will the packaging give it away?</summary>
+        <p>No. Ships in a plain brown box with only a shipping label. No brand name, no product image, no return address that hints at what's inside.</p>
+      </details>
+      <details>
+        <summary>What name appears on my card statement?</summary>
+        <p>"LN Goods" — chosen specifically to look ordinary. Not "LacyNighty," not the product name.</p>
+      </details>
+      <details>
+        <summary>Can I return it if it's not for us?</summary>
+        <p>Yes, within 30 days. Intimate items must be unworn and unused with original packaging intact. Refund is silent — no marketing follow-up, no surveys.</p>
+      </details>
+      <details>
+        <summary>How long until it arrives?</summary>
+        <p>Most US addresses receive it within 4–6 business days. International orders typically arrive in 7–12 days. The estimated date is shown next to your Add to Cart button.</p>
+      </details>
+      <details>
+        <summary>Is the belt adjustable enough for me?</summary>
+        <p>The belt fits waist sizes 24"–42" with full adjustability. Cuffs use micro-adjust velcro plus a buckle for fine control. If something doesn't fit, free returns apply.</p>
+      </details>
+    </div>
+  </section>
+
+  <!-- 11 — CLOSING -->
+  <section class="close">
+    <p class="k">{{HERO_CAPTION}}</p>
+    <p class="sig">Lacy Nighty <span class="dot"></span> for the night she'll never forget</p>
+  </section>
+
+</div>
+<!-- =================== END =================== -->

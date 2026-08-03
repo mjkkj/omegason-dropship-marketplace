@@ -1,0 +1,11 @@
+{
+  "name": "omegason",
+  "owner": { "name": "Omegason" },
+  "metadata": {
+    "description": "Marketplace nội bộ Omegason — plugin & skill dùng chung cho team dropship/DTC.",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    { "name": "omegason-dropship", "source": "./omegason-dropship" }
+  ]
+}
