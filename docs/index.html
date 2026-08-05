@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Omegason Agent Playbook — Khung làm việc chung</title>
+<style>
+  :root{
+    --bg:#f6f8fb; --panel:#ffffff; --panel2:#eef2f7; --line:#dce3ec;
+    --ink:#1a2230; --muted:#556070; --dim:#8a96a6;
+    --build:#2563eb; --launch:#d97706; --optimize:#059669; --scale:#9333ea;
+    --accent:#2563eb; --danger:#dc2626; --ok:#059669; --warn:#b45309;
+    --code-bg:#f2f5f9; --code-ink:#1d4ed8;
+    --radius:14px; --maxw:1080px;
+    --font:'Segoe UI',-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
+    --mono:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:linear-gradient(180deg,#eef2f7,#f6f8fb);color:var(--ink);font-family:var(--font);line-height:1.62;font-size:16px}
+  a{color:var(--accent);text-decoration:none}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 22px}
+
+  /* HERO */
+  header.hero{padding:54px 0 34px;border-bottom:1px solid var(--line);
+    background:radial-gradient(1200px 400px at 20% -10%,rgba(37,99,235,.10),transparent 60%);}
+  .kicker{display:inline-block;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:12px}
+  h1{font-size:38px;line-height:1.15;margin:0 0 12px;font-weight:800;letter-spacing:-.5px}
+  .sub{color:var(--muted);font-size:18px;max-width:780px}
+  .meta{margin-top:22px;display:flex;gap:10px;flex-wrap:wrap}
+  .chip{background:var(--panel2);border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-size:13px;color:var(--muted)}
+  .chip b{color:var(--ink)}
+
+  /* NAV */
+  nav.toc{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);box-shadow:0 1px 6px rgba(20,40,80,.05)}
+  nav.toc .wrap{display:flex;gap:6px;overflow-x:auto;padding:10px 22px}
+  nav.toc a{white-space:nowrap;color:var(--muted);font-size:13.5px;padding:7px 13px;border-radius:8px;font-weight:600}
+  nav.toc a:hover{background:var(--panel2);color:var(--ink)}
+
+  section{padding:44px 0;border-bottom:1px solid var(--line)}
+  h2{font-size:26px;margin:0 0 6px;font-weight:800;letter-spacing:-.3px}
+  h2 .num{color:var(--dim);font-weight:800;margin-right:10px}
+  .lead{color:var(--muted);margin:0 0 22px;max-width:840px}
+  h3{font-size:18px;margin:26px 0 10px;font-weight:700}
+
+  /* generic cards */
+  .grid{display:grid;gap:16px}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:18px}
+  .card h4{margin:0 0 6px;font-size:16px}
+  .card p{margin:0;color:var(--muted);font-size:14.5px}
+  .tag{display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:3px 9px;border-radius:6px;margin-bottom:10px}
+
+  /* analogy row */
+  .analogy{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:8px}
+  .an{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px}
+  .an .ic{font-size:24px}
+  .an h4{margin:8px 0 4px;font-size:16px}
+  .an p{margin:0;color:var(--muted);font-size:14px}
+
+  /* 3-layer */
+  .layers{display:grid;gap:14px}
+  .layer{display:grid;grid-template-columns:210px 1fr;gap:18px;align-items:center;background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:12px;padding:16px 18px}
+  .layer .who{font-weight:800;font-size:17px}
+  .layer .who small{display:block;color:var(--dim);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.08em;margin-top:3px}
+  .layer.l1{border-left-color:var(--scale)} .layer.l2{border-left-color:var(--build)} .layer.l3{border-left-color:var(--optimize)}
+  .do{color:var(--ink)} .dont{color:var(--danger);font-size:13.5px;margin-top:4px}
+
+  /* tables */
+  table{width:100%;border-collapse:collapse;margin-top:14px;font-size:14px;background:var(--panel);border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+  th,td{text-align:left;padding:11px 13px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{background:var(--panel2);color:var(--ink);font-size:12.5px;text-transform:uppercase;letter-spacing:.05em}
+  tr:last-child td{border-bottom:none}
+  td code,.mono{font-family:var(--mono);font-size:12.5px;background:var(--code-bg);border:1px solid var(--line);padding:1px 6px;border-radius:5px;color:var(--code-ink)}
+
+  /* phase rail */
+  .phaserail{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:6px 0 26px}
+  .ph{border-radius:12px;padding:14px 15px;border:1px solid var(--line);background:var(--panel)}
+  .ph .n{font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+  .ph h4{margin:6px 0 2px;font-size:17px}
+  .ph p{margin:0;color:var(--muted);font-size:13px}
+  .ph.b{border-top:4px solid var(--build)} .ph.b .n{color:var(--build)}
+  .ph.l{border-top:4px solid var(--launch)} .ph.l .n{color:var(--launch)}
+  .ph.o{border-top:4px solid var(--optimize)} .ph.o .n{color:var(--optimize)}
+  .ph.s{border-top:4px solid var(--scale)} .ph.s .n{color:var(--scale)}
+
+  .accent-b{color:var(--build)} .accent-l{color:var(--launch)} .accent-o{color:var(--optimize)} .accent-s{color:var(--scale)}
+  .bar{height:4px;border-radius:4px;margin:40px 0 6px;width:90px}
+  .bar.b{background:var(--build)} .bar.l{background:var(--launch)} .bar.o{background:var(--optimize)} .bar.s{background:var(--scale)}
+
+  /* WF cards */
+  .wf{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:0;overflow:hidden;margin-bottom:16px}
+  .wf .head{display:flex;align-items:center;gap:14px;padding:16px 18px;border-bottom:1px solid var(--line);background:var(--panel2)}
+  .wf .badge{flex:none;width:44px;height:44px;border-radius:11px;display:grid;place-items:center;font-weight:800;font-size:18px;color:#fff}
+  .wf.b .badge{background:var(--build)} .wf.l .badge{background:var(--launch)} .wf.o .badge{background:var(--optimize)} .wf.s .badge{background:var(--scale)}
+  .wf .ttl{font-weight:800;font-size:17px}
+  .wf .ttl small{display:block;color:var(--muted);font-weight:600;font-size:13px;margin-top:2px}
+  .wf .body{padding:16px 18px;display:grid;gap:12px}
+  .wf .row{display:grid;grid-template-columns:130px 1fr;gap:12px;font-size:14px}
+  .wf .row .lab{color:var(--dim);font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.05em;padding-top:2px}
+  .wf .row .val{color:var(--ink)}
+  .wf .row .val .sk{font-family:var(--mono);font-size:12.5px;background:var(--code-bg);border:1px solid var(--line);padding:1px 6px;border-radius:5px;color:var(--code-ink);display:inline-block;margin:2px 3px 2px 0}
+  .wf .row.grow .val{color:var(--warn)}
+  .gate{display:inline-block;font-size:12px;font-weight:700;background:rgba(248,113,113,.10);color:var(--danger);border:1px solid rgba(248,113,113,.30);padding:2px 9px;border-radius:6px}
+
+  /* callouts */
+  .note{border-radius:12px;padding:14px 16px;font-size:14.5px;margin:16px 0;border:1px solid var(--line)}
+  .note.warn{background:rgba(251,191,36,.08);border-color:rgba(251,191,36,.35)}
+  .note.rule{background:rgba(110,168,254,.08);border-color:rgba(110,168,254,.35)}
+  .note.danger{background:rgba(248,113,113,.08);border-color:rgba(248,113,113,.35)}
+  .note b{color:var(--ink)}
+
+  /* thresholds */
+  .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .kpi{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px;text-align:center}
+  .kpi .big{font-size:30px;font-weight:800}
+  .kpi.kill .big{color:var(--danger)} .kpi.keep .big{color:var(--warn)} .kpi.scale .big{color:var(--ok)}
+  .kpi small{display:block;color:var(--muted);margin-top:6px;font-size:13px}
+
+  /* checklist skills */
+  ul.check{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+  ul.check li{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 13px;display:flex;gap:10px;align-items:flex-start;font-size:14px}
+  ul.check li::before{content:"▢";color:var(--accent);font-size:16px;line-height:1.4}
+  .skname{font-family:var(--mono);font-size:13px;color:var(--code-ink);font-weight:600}
+  .skdesc{color:var(--muted);font-size:13px}
+
+  .mcp{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:11px 14px;margin-bottom:8px}
+  .mcp .name{font-weight:700}
+  .mcp .name small{display:block;color:var(--muted);font-weight:500;font-size:13px}
+  .status{font-size:12px;font-weight:700;padding:4px 11px;border-radius:999px;white-space:nowrap}
+  .status.on{background:rgba(52,211,153,.15);color:var(--ok);border:1px solid rgba(52,211,153,.4)}
+  .status.auth{background:rgba(251,191,36,.15);color:var(--warn);border:1px solid rgba(251,191,36,.4)}
+
+  pre{background:var(--code-bg);border:1px solid var(--line);border-radius:12px;padding:16px;overflow:auto;font-family:var(--mono);font-size:13px;color:#334155;line-height:1.7}
+  pre .c{color:#8a96a6} pre .k{color:#2563eb} pre .g{color:#059669}
+
+  .steps{counter-reset:s;display:grid;gap:12px}
+  .step{counter-increment:s;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px 14px 56px;position:relative}
+  .step::before{content:counter(s);position:absolute;left:14px;top:14px;width:28px;height:28px;border-radius:8px;background:var(--accent);color:#fff;font-weight:800;display:grid;place-items:center;font-size:15px}
+  .step b{color:var(--ink)}
+
+  .cmd{font-family:var(--mono);font-size:13px;background:var(--code-bg);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:8px;padding:9px 12px;margin:7px 0;color:var(--code-ink)}
+
+  footer{padding:34px 0 60px;color:var(--dim);font-size:13px;text-align:center}
+
+  @media(max-width:820px){
+    .g3,.g2,.phaserail,.kpis,.analogy{grid-template-columns:1fr}
+    .layer,.wf .row{grid-template-columns:1fr}
+    h1{font-size:30px}
+  }
+  @media print{
+    nav.toc{display:none} body{background:#fff;color:#000} section{border-color:#ddd}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="kicker">Omegason · Agent Operator Playbook</span>
+    <h1>Khung làm việc chung với AI Agent cho cả team</h1>
+    <p class="sub">Đây là <b>sổ tay dùng chung</b> của Omegason: một folder Claude Cowork chứa toàn bộ quy trình, ngưỡng số và bộ skill để đưa một sản phẩm Shopify đi từ <b>ý tưởng → store → test → scale</b>. Mỗi người mở folder này cho dự án của mình; ai làm ra skill mới thì chia sẻ lại để cả team cùng update playbook.</p>
+    <div class="meta">
+      <span class="chip">4 giai đoạn · <b>10 workflow</b></span>
+      <span class="chip">Chế độ: <b>Human-in-the-loop</b></span>
+      <span class="chip">Người duyệt cuối: <b>Human</b></span>
+      <span class="chip">Cập nhật: <b>2026-08-03</b></span>
+    </div>
+  </div>
+</header>
+
+<nav class="toc">
+  <div class="wrap">
+    <a href="#gioi-thieu">Playbook là gì</a>
+    <a href="#batdau">Bắt đầu 5 phút</a>
+    <a href="#3lop">Ai làm gì</a>
+    <a href="#4giaidoan">4 giai đoạn</a>
+    <a href="#wf">10 Workflow</a>
+    <a href="#gates">Cổng duyệt</a>
+    <a href="#khoso">Kho skill & MCP</a>
+    <a href="#chiase">Chia sẻ skill mới</a>
+    <a href="#plugin">Đóng gói plugin</a>
+    <a href="#sua">Sửa ở đâu</a>
+    <a href="#lenh">Câu lệnh mẫu</a>
+  </div>
+</nav>
+
+<!-- GIỚI THIỆU -->
+<section id="gioi-thieu">
+  <div class="wrap">
+    <h2><span class="num">§</span>Playbook này là gì — đọc trước khi bắt đầu</h2>
+    <p class="lead">Nếu bạn mới vào team: 3 khái niệm dưới đây là tất cả những gì cần hiểu để dùng được hệ thống. Đọc 2 phút.</p>
+    <div class="analogy">
+      <div class="an"><div class="ic">📁</div><h4>Folder = bộ não</h4><p>Toàn bộ luật chơi, ngưỡng số, quy trình và kiến thức đã học nằm trong 1 folder. Agent đọc folder rồi mới biết phải làm gì. Không có gì "dặn miệng".</p></div>
+      <div class="an"><div class="ic">🤖</div><h4>Agent = nhân viên</h4><p>Claude đọc folder, làm phần nặng: research, phân tích, viết bài, dựng trang, gom số. Nó <b>đề xuất</b> — con người <b>quyết</b>.</p></div>
+      <div class="an"><div class="ic">🧩</div><h4>Skill = tay nghề</h4><p>Mỗi "skill" là một quy trình đóng gói cho 1 việc (vd tìm ngách, chấm sản phẩm, dựng PDP). Cả team dùng chung, ai cũng có thể tạo skill mới.</p></div>
+    </div>
+    <div class="note rule">🔑 <b>Một câu nắm ý:</b> Bạn không "chat linh tinh" với agent. Bạn mở folder chung → giao việc theo <b>workflow</b> → agent dùng đúng <b>skill</b> + số liệu trong folder → dừng lại ở các <b>cổng duyệt</b> để người quyết. Kết quả và bài học được ghi lại để cả team dùng tiếp.</div>
+    <h3>Vì sao dùng chung 1 folder?</h3>
+    <div class="grid g3">
+      <div class="card"><h4>Nhất quán</h4><p>Mọi người chấm sản phẩm bằng cùng một bộ ngưỡng, cùng một quy trình. Không mỗi người một kiểu.</p></div>
+      <div class="card"><h4>Tích luỹ</h4><p>Bài học từ mỗi lần test được ghi vào <span class="mono">knowledge/</span>. Người sau research nhanh hơn người trước.</p></div>
+      <div class="card"><h4>Chia sẻ</h4><p>Ai làm ra skill/template tốt thì bỏ vào folder, cả team update playbook và dùng ngay.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- BẮT ĐẦU -->
+<section id="batdau">
+  <div class="wrap">
+    <h2><span class="num">§</span>Bắt đầu trong 5 phút</h2>
+    <p class="lead">Làm đúng 3 bước này là chạy được. Chi tiết skill/MCP xem mục <a href="#khoso">Kho skill &amp; MCP</a>.</p>
+    <div class="steps">
+      <div class="step"><b>Mở folder trong Cowork.</b> Chọn folder <span class="mono">DRIVE full-stack-dropshipping-agent-system-all-md</span> làm workspace. Agent sẽ đọc/ghi trực tiếp tại đây cho dự án của bạn.</div>
+      <div class="step"><b>Cài skill + kết nối MCP.</b> Vào Cowork → Settings → Skills/Plugins để cài các skill ở mục <a href="#khoso">Kho skill</a>; kết nối các MCP (Shopify, WinningHunter, Notion…) trong claude.ai → Connectors. Đây là điều kiện để agent làm được việc.</div>
+      <div class="step"><b>Giao việc theo pid + workflow.</b> Ví dụ: gõ <span class="mono">"Check pipeline"</span> để xem trạng thái, hoặc <span class="mono">"Chạy bước tiếp cho pid-0001"</span>. Agent tự tra trạng thái và gọi đúng workflow.</div>
+    </div>
+    <div class="note warn">⚠️ <b>Trạng thái sống nằm ở Notion, không phải file.</b> Drive connector chỉ tạo file mới chứ không ghi đè, nên <span class="mono">pipeline-status.md</span> chỉ là ảnh chụp lịch sử. Trạng thái thật của mọi sản phẩm và việc-chờ-duyệt nằm trong Notion (database <i>Dropship Pipeline</i> + <i>Human Tasks</i>). Agent luôn đọc Notion trước.</div>
+  </div>
+</section>
+
+<!-- 3 LỚP -->
+<section id="3lop">
+  <div class="wrap">
+    <h2><span class="num">§</span>Ai làm gì — 3 lớp vai trò</h2>
+    <p class="lead">Đừng để lẫn vai. Con người chọn hướng và duyệt; agent điều phối và làm chuyên môn.</p>
+    <div class="layers">
+      <div class="layer l1"><div class="who">Con người<small>CEO / Lead · Human duyệt cuối</small></div><div><div class="do"><b>Chọn hướng &amp; duyệt:</b> mở niche nào, store nào scale/cut, vốn vào đâu; bấm duyệt tại các cổng (supplier, giá, deploy, launch, ngân sách).</div><div class="dont">✗ Không "ôm việc" — không tự tay research hay dựng trang.</div></div></div>
+      <div class="layer l2"><div class="who">Orchestrator<small>Agent điều phối · SKILL.md</small></div><div><div class="do"><b>Điều phối:</b> đọc trạng thái → chọn đúng workflow → gọi skill chuyên trách → gom kết quả → dừng ở cổng duyệt.</div><div class="dont">✗ Không tự publish, launch, hay tiêu tiền.</div></div></div>
+      <div class="layer l3"><div class="who">Specialist<small>Skill / MCP</small></div><div><div class="do"><b>Làm sâu 1 việc:</b> greenlight-run, niche-hunter, pid-to-store, hook-tester, Shopify MCP, WinningHunter, Higgsfield…</div><div class="dont">✗ Không tự chuyển bước, không tự quyết.</div></div></div>
+    </div>
+    <div class="note rule">🔑 <b>Quy tắc vàng:</b> Agent <b>research · phân tích · draft · đề xuất · ghi record</b>. Con người <b>duyệt</b> mọi hành động: publish, launch, ngân sách, supplier, refund, pháp lý.</div>
+  </div>
+</section>
+
+<!-- 4 GIAI ĐOẠN -->
+<section id="4giaidoan">
+  <div class="wrap">
+    <h2><span class="num">§</span>Bức tranh lớn — 4 giai đoạn</h2>
+    <p class="lead">10 workflow được gom vào 4 giai đoạn. Một sản phẩm đi lần lượt qua các giai đoạn này; mỗi giai đoạn có bộ skill riêng.</p>
+    <div class="phaserail">
+      <div class="ph b"><div class="n">Build</div><h4>WF 01→05</h4><p>Research → validate → supplier → offer → store</p></div>
+      <div class="ph l"><div class="n">Launch</div><h4>WF 06→07</h4><p>Creative + mở test $500</p></div>
+      <div class="ph o"><div class="n">Optimize</div><h4>WF 08⇄09</h4><p>Daily brief · Kill / Keep / Scale</p></div>
+      <div class="ph s"><div class="n">Scale</div><h4>WF 10 + lặp</h4><p>Nhân winner · ghi bài học · mở danh mục</p></div>
+    </div>
+    <div class="note rule">Cách đọc phần dưới: mỗi workflow là 1 thẻ gồm <b>Mục tiêu · Ai làm · Skill/tool đang có · Có thể tự phát triển · Output · Cổng duyệt</b>. Cột "Có thể tự phát triển" là gợi ý nơi team có thể tạo skill/template mới để hệ thống mạnh hơn.</div>
+  </div>
+</section>
+
+<!-- 10 WORKFLOW -->
+<section id="wf">
+  <div class="wrap">
+    <h2><span class="num">§</span>10 Workflow — chi tiết từng bước</h2>
+    <p class="lead">Đây là phần tham chiếu chính. Khi làm dự án, mở đúng thẻ WF của bước bạn đang chạy.</p>
+
+    <!-- BUILD -->
+    <div class="bar b"></div>
+    <h3 class="accent-b">Giai đoạn 1 · BUILD — từ ý tưởng đến store sẵn sàng</h3>
+
+    <div class="wf b">
+      <div class="head"><div class="badge">01</div><div class="ttl">Product Research<small>Tìm cơ hội sản phẩm có tín hiệu nhu cầu thật</small></div></div>
+      <div class="body">
+        <div class="row"><div class="lab">Mục tiêu</div><div class="val">Tìm ngách/sản phẩm có nhu cầu thực và phù hợp năng lực vận hành.</div></div>
+        <div class="row"><div class="lab">Ai làm</div><div class="val">Agent chạy; người chọn candidate để đẩy sang bước 02.</div></div>
+        <div class="row"><div class="lab">Skill / tool</div><div class="val"><span class="sk">niche-hunter</span><span class="sk">niche-product-hunter</span> + WinningHunter MCP (<span class="mono">find_winning_products</span>, <span class="mono">search_facebook_ads</span>, <span class="mono">get_tiktok_trending_products</span>, <span class="mono">search_exploding_topics</span>, <span class="mono">daily_radar</span>) + web search.</div></div>
+        <div class="row grow"><div class="lab">Tự phát triển</div><div class="val">Skill lọc theo tiêu chí riêng của Omegason (mùa vụ, prohibited categories), hoặc bộ prompt research chuẩn hoá.</div></div>
+        <div class="row"><div class="lab">Output</div><div class="val">Product Candidate Package (theo <span class="mono">templates/product-candidate-template.md</span>).</div></div>
+        <div class="row"><div class="lab">Cổng</div><div class="val"><span class="gate">Có ≥ 1 candidate rõ nguồn tín hiệu</span></div></div>
+      </div>
+    </div>
+
+    <div class="wf b">
+      <div class="head"><div class="badge">02</div><div class="ttl">Product Validation<small>Chấm điểm: có đáng đầu tư tiếp không?</small></div></div>
+      <div class="body">
+        <div class="row"><div class="lab">Mục tiêu</div><div class="val">Ra verdict GO / REFINE / REWORK / KILL cho candidate, kèm hồ sơ pid đầy đủ.</div></div>
+        <div class="row"><div class="lab">Ai làm</div><div class="val">Agent chấm; người duyệt hướng khi REWORK, và duyệt advance sang sourcing.</div></div>
+        <div class="row"><div class="lab">Skill / tool</div><div class="val"><span class="sk">greenlight-run</span> (engine chính — chạy pipeline 00→06) + WinningHunter MCP + web search + <span class="mono">templates/validation-scorecard.md</span>.</div></div>
+        <div class="row grow"><div class="lab">Tự phát triển</div><div class="val">Thêm gate kinh tế đặc thù, hoặc skill re-score nhanh khi đã rework offer.</div></div>
+        <div class="row"><div class="lab">Output</div><div class="val">Folder <span class="mono">products/pid-XXXX/</span> + verdict + đường lên hạng.</div></div>
+        <div class="row"><div class="lab">Cổng</div><div class="val"><span class="gate">Verdict GO/REFINE → người duyệt advance (Strategy)</span></div></div>
+      </div>
+    </div>
+
+    <div class="wf b">
+      <div class="head"><div class="badge">03</div><div class="ttl">Supplier Validation<small>Xác minh nguồn hàng, giá, thời gian ship</small></div></div>
+      <div class="body">
+        <div class="row"><div class="lab">Mục tiêu</div><div class="val">Chọn supplier primary + backup đúng chất lượng, giá và SLA.</div></div>
+        <div class="row"><div class="lab">Ai làm</div><div class="val">Agent tìm &amp; so sánh; <b>Human đặt sample và duyệt supplier</b>.</div></div>
+        <div class="row"><div class="lab">Skill / tool</div><div class="val">Web search (AliExpress, CJ, 1688, Alibaba) + <span class="mono">knowledge/supplier-history.md</span> + <span class="mono">templates/supplier-comparison.md</span>.</div></div>
+        <div class="row grow"><div class="lab">Tự phát triển</div><div class="val">Skill chấm supplier tự động, hoặc template email hỏi spec/giá gửi supplier.</div></div>
+        <div class="row"><div class="lab">Output</div><div class="val">Supplier Approval Package + landed cost thật.</div></div>
+        <div class="row"><div class="lab">Cổng</div><div class="val"><span class="gate">Margin ≥ 60% · Human chốt supplier (Finance + Ops)</span></div></div>
+      </div>
+    </div>
+
+    <div class="wf b">
+      <div class="head"><div class="badge">04</div><div class="ttl">Offer Development<small>Biến sản phẩm thành offer có lời, dễ hiểu</small></div></div>
+      <div class="body">
+        <div class="row"><div class="lab">Mục tiêu</div><div class="val">Đóng gói offer hấp dẫn trong vài giây và đạt unit-economics.</div></div>
+        <div class="row"><div class="lab">Ai làm</div><div class="val">Agent draft offer &amp; tính toán; người duyệt offer và giá bán.</div></div>
+        <div class="row"><div class="lab">Skill / tool</div><div class="val"><span class="sk">avatar-research</span><span class="sk">quick-market-research</span> + <span class="mono">templates/unit-economics-template.md</span>, <span class="mono">offer-package-template.md</span> + <span class="mono">knowledge/buyer-language-library.md</span> + WinningHunter <span class="mono">brief_competitor</span>.</div></div>
+        <div class="row grow"><div class="lab">Tự phát triển</div><div class="val">Thư viện offer mẫu theo ngách, hoặc skill tự tính contribution &amp; breakeven ROAS.</div></div>
+        <div class="row"><div class="lab">Output</div><div class="val">Offer Package + bảng unit-economics.</div></div>
+        <div class="row"><div class="lab">Cổng</div><div class="val"><span class="gate">Unit-econ đạt · Human chốt offer &amp; giá (Finance)</span></div></div>
+      </div>
+    </div>
+
+    <div class="wf b">
+      <div class="head"><div class="badge">05</div><div class="ttl">Store Build<small>Dựng product page chuyển đổi + tracking</small></div></div>
+      <div class="body">
+        <div class="row"><div class="lab">Mục tiêu</div><div class="val">Xây PDP tốt, tracking đúng, test order chạy được.</div></div>
+        <div class="row"><div class="lab">Ai làm</div><div class="val">Agent dựng bản DRAFT; người duyệt trước khi deploy/publish.</div></div>
+        <div class="row"><div class="lab">Skill / tool</div><div class="val"><span class="sk">pid-to-store</span> (engine chính) <span class="sk">product-pdp-image-builder</span><span class="sk">audit-to-des-html</span><span class="sk">clone-link-to-my-shopify</span><span class="sk">brand-builder</span><span class="sk">ads-landing-builder</span><span class="sk">dtc-infographic-generator</span> + Shopify MCP (<span class="mono">create-product</span>, <span class="mono">update-product</span>).</div></div>
+        <div class="row grow"><div class="lab">Tự phát triển</div><div class="val">Bộ QA checklist tự động, hoặc skill dựng theme/section chuẩn brand Omegason.</div></div>
+        <div class="row"><div class="lab">Output</div><div class="val">Store/PDP DRAFT + landing page + gallery ảnh, qua <span class="mono">templates/store-qa-checklist.md</span>.</div></div>
+        <div class="row"><div class="lab">Cổng</div><div class="val"><span class="gate">QA pass · Human duyệt deploy DRAFT → publish (Ops)</span></div></div>
+      </div>
+    </div>
+
+    <!-- LAUNCH -->
+    <div class="bar l"></div>
+    <h3 class="accent-l">Giai đoạn 2 · LAUNCH — sản xuất creative &amp; mở test</h3>
+
+    <div class="wf l">
+      <div class="head"><div class="badge">06</div><div class="ttl">Creative Production<small>Bộ creative đa dạng để test giả thuyết</small></div></div>
+      <div class="body">
+        <div class="row"><div class="lab">Mục tiêu</div><div class="val">Sản xuất creative theo phương pháp Angle-First để test khách hàng.</div></div>
+        <div class="row"><div class="lab">Ai làm</div><div class="val">Agent dựng hook library + creative; người duyệt claim &amp; nội dung.</div></div>
+        <div class="row"><div class="lab">Skill / tool</div><div class="val"><span class="sk">hook-tester</span> (engine chính) <span class="sk">dtc-infographic-generator</span><span class="sk">product-pdp-image-builder</span> + Higgsfield MCP (<span class="mono">generate_video</span>, <span class="mono">generate_image</span>, <span class="mono">virality_predictor</span>) + WinningHunter (<span class="mono">creative_inspiration_pack</span>, <span class="mono">get_ad_transcript</span>) + <span class="mono">knowledge/creative-learning-library.md</span>.</div></div>
+        <div class="row grow"><div class="lab">Tự phát triển</div><div class="val">Thư viện hook thắng theo ngách, hoặc skill sinh script UGC 9:16 chuẩn.</div></div>
+        <div class="row"><div class="lab">Output</div><div class="val">Creative Test Package: hook library + test matrix + bộ video/ảnh.</div></div>
+        <div class="row"><div class="lab">Cổng</div><div class="val"><span class="gate">Đủ creative cho matrix test</span></div></div>
+      </div>
+    </div>
+
+    <div class="wf l">
+      <div class="head"><div class="badge">07</div><div class="ttl">Campaign Launch<small>Mở test có cấu trúc, stop-loss rõ</small></div></div>
+      <div class="body">
+        <div class="row"><div class="lab">Mục tiêu</div><div class="val">Launch campaign với tracking đúng và kill/scale rule rõ từ đầu.</div></div>
+        <div class="row"><div class="lab">Ai làm</div><div class="val"><b>Human thao tác Ads Manager</b>; agent chuẩn bị toàn bộ cấu hình dạng checklist copy-paste.</div></div>
+        <div class="row"><div class="lab">Skill / tool</div><div class="val">Framework từ <span class="sk">hook-tester</span> + <span class="mono">templates/campaign-launch-checklist.md</span> + Shopify MCP (<span class="mono">run-analytics-query</span>, <span class="mono">list-orders</span>) + Meta Ads MCP.</div></div>
+        <div class="row grow"><div class="lab">Tự phát triển</div><div class="val">Skill sinh naming convention campaign, hoặc bộ config test chuẩn ngân sách $500.</div></div>
+        <div class="row"><div class="lab">Output</div><div class="val">Campaign live + baseline được xác nhận. Ngân sách test <b>$500/sản phẩm</b>.</div></div>
+        <div class="row"><div class="lab">Cổng</div><div class="val"><span class="gate">Human duyệt launch &amp; cấp ngân sách (Finance)</span></div></div>
+      </div>
+    </div>
+
+    <!-- OPTIMIZE -->
+    <div class="bar o"></div>
+    <h3 class="accent-o">Giai đoạn 3 · OPTIMIZE — đọc số, cắt/nhân theo luật</h3>
+
+    <div class="wf o">
+      <div class="head"><div class="badge">08</div><div class="ttl">Daily Optimization<small>Theo dõi hằng ngày, phát hiện bottleneck</small></div></div>
+      <div class="body">
+        <div class="row"><div class="lab">Mục tiêu</div><div class="val">Mỗi ngày kéo số, so ngưỡng, phát hiện bất thường trên store live.</div></div>
+        <div class="row"><div class="lab">Ai làm</div><div class="val">Agent tự chạy (nên đặt scheduled task mỗi sáng); người đọc đề xuất.</div></div>
+        <div class="row"><div class="lab">Skill / tool</div><div class="val">Shopify MCP (<span class="mono">run-analytics-query</span>, <span class="mono">list-orders</span>, <span class="mono">get-inventory-levels</span>) + Meta Ads data + <span class="mono">templates/daily-performance-brief.md</span> + <span class="sk">store-intel</span> (mổ đối thủ).</div></div>
+        <div class="row grow"><div class="lab">Tự phát triển</div><div class="val">Artifact dashboard tự pull Shopify/Meta mỗi lần mở; skill brief tự đẩy vào Notion Human Tasks.</div></div>
+        <div class="row"><div class="lab">Output</div><div class="val">Daily Performance Brief + cờ bất thường.</div></div>
+        <div class="row"><div class="lab">Cổng</div><div class="val"><span class="gate">Đủ spend $100 → đưa vào WF 09</span></div></div>
+      </div>
+    </div>
+
+    <div class="wf o">
+      <div class="head"><div class="badge">09</div><div class="ttl">Kill · Keep · Scale<small>Quyết ngân sách theo contribution thật</small></div></div>
+      <div class="body">
+        <div class="row"><div class="lab">Mục tiêu</div><div class="val">Quyết phân bổ ngân sách dựa trên contribution thực tế, không chỉ platform ROAS.</div></div>
+        <div class="row"><div class="lab">Ai làm</div><div class="val">Agent đề xuất KILL/KEEP/SCALE; <b>Human duyệt</b> mọi thay đổi ngân sách.</div></div>
+        <div class="row"><div class="lab">Skill / tool</div><div class="val">Shopify MCP (revenue thật) + <span class="mono">config/thresholds.yaml</span> (bộ rule) + <span class="mono">templates/decision-record.md</span>.</div></div>
+        <div class="row grow"><div class="lab">Tự phát triển</div><div class="val">Skill tính contribution margin tự động và sinh Decision Record.</div></div>
+        <div class="row"><div class="lab">Output</div><div class="val">Decision Record + đề xuất ngân sách.</div></div>
+        <div class="row"><div class="lab">Cổng</div><div class="val"><span class="gate">Human duyệt KILL / SCALE / thay ngân sách (Finance)</span></div></div>
+      </div>
+    </div>
+
+    <h3>Luật quyết định — trích thẳng <span class="mono">config/thresholds.yaml</span></h3>
+    <div class="kpis">
+      <div class="kpi kill"><div class="big">KILL</div><small>spend ≥ <b>5 × AOV</b> mà chưa có sale nào</small></div>
+      <div class="kpi keep"><div class="big">1.4</div><small>KEEP khi ROAS ≥ 1.4 (sau spend $100)</small></div>
+      <div class="kpi scale"><div class="big">1.6</div><small>SCALE khi ROAS ≥ 1.6 · ≥ 5 purchases · +20%/48h</small></div>
+    </div>
+    <div class="note warn">💰 <b>Đừng nhìn doanh thu, nhìn contribution.</b> Margin tối thiểu 60% → breakeven ROAS lý thuyết ≈ 1.67, mà min_roas đang để 1.4. Nghĩa là ta <b>chủ đích</b> chấp nhận hoà/lỗ nhẹ đơn đầu để lấy data/LTV. Luôn bắt agent tính contribution thật và nêu rõ trong Decision Record.</div>
+
+    <!-- SCALE -->
+    <div class="bar s"></div>
+    <h3 class="accent-s">Giai đoạn 4 · SCALE — nhân winner &amp; đóng vòng học</h3>
+
+    <div class="wf s">
+      <div class="head"><div class="badge">10</div><div class="ttl">Post-Test Learning<small>Biến kết quả test thành tri thức dùng lại</small></div></div>
+      <div class="body">
+        <div class="row"><div class="lab">Mục tiêu</div><div class="val">Ghi lại bài học mỗi test — đây là bước tạo compound value của cả hệ thống.</div></div>
+        <div class="row"><div class="lab">Ai làm</div><div class="val">Agent viết learning-record; người review trước khi lưu vào knowledge.</div></div>
+        <div class="row"><div class="lab">Skill / tool</div><div class="val"><span class="mono">templates/learning-record.md</span> + 5 file trong <span class="mono">knowledge/</span> (buyer-language, creative, benchmarks, guardrails, supplier).</div></div>
+        <div class="row grow"><div class="lab">Tự phát triển</div><div class="val">Skill tự tổng hợp learning từ pid đã đóng, hoặc dashboard "bài học theo ngách".</div></div>
+        <div class="row"><div class="lab">Output</div><div class="val">Learning Record + cập nhật <span class="mono">knowledge/</span>.</div></div>
+        <div class="row"><div class="lab">Cổng</div><div class="val"><span class="gate">Bắt buộc trước khi đóng mỗi pid KILL</span></div></div>
+      </div>
+    </div>
+
+    <div class="grid g2">
+      <div class="card"><h4>Bơm winner</h4><p>Tăng budget bậc 20%/48h; mở thêm góc audience/geo; nhân creative từ hook thắng. Mọi thay đổi ngân sách qua cổng duyệt.</p></div>
+      <div class="card"><h4>Theo dõi thị trường</h4><p>WinningHunter <span class="mono">track_brand</span> / <span class="mono">track_store</span> / <span class="mono">daily_radar</span> bắt winner &amp; động thái đối thủ sớm.</p></div>
+    </div>
+    <div class="note warn">📚 <b>Learning compound:</b> mỗi KILL bắt buộc có learning-record (WF 10) trước khi đóng pid. <span class="mono">knowledge/</span> càng dày thì research vòng sau càng nhanh — đó là tài sản chung của team.</div>
+  </div>
+</section>
+
+<!-- GATES -->
+<section id="gates">
+  <div class="wrap">
+    <h2><span class="num">§</span>Cổng duyệt — nơi con người BẮT BUỘC quyết</h2>
+    <p class="lead">Agent tạo <b>Approval Request</b> (kèm nhãn domain) rồi dừng lại ở các cổng sau. Không có duyệt thì không đi tiếp.</p>
+    <table>
+      <tr><th>Cổng</th><th>Hành động chờ duyệt</th><th>Nhãn domain</th></tr>
+      <tr><td>WF 02→03</td><td>Advance candidate sang sourcing</td><td>Strategy</td></tr>
+      <tr><td>WF 03</td><td>Chốt supplier / landed cost</td><td>Finance + Operations</td></tr>
+      <tr><td>WF 04</td><td>Chốt offer &amp; giá bán</td><td>Finance</td></tr>
+      <tr><td>WF 05</td><td>Deploy Shopify DRAFT → publish</td><td>Operations</td></tr>
+      <tr><td>WF 07</td><td>Launch campaign / set ngân sách</td><td>Finance</td></tr>
+      <tr><td>WF 08→09</td><td>KILL / SCALE / thay ngân sách</td><td>Finance</td></tr>
+      <tr><td>bất kỳ</td><td>Refund, claim, thay đổi pháp lý</td><td>Legal</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- KHO SKILL & MCP -->
+<section id="khoso">
+  <div class="wrap">
+    <h2><span class="num">§</span>Kho skill &amp; MCP dùng chung</h2>
+    <p class="lead">Đây là "tủ đồ nghề" của team. Skill cài trong Cowork (Settings → Skills/Plugins); MCP kết nối trong claude.ai → Connectors. Nhóm theo giai đoạn sử dụng.</p>
+
+    <h3 class="accent-b">Build — research &amp; dựng store</h3>
+    <ul class="check">
+      <li><div><span class="skname">niche-hunter</span> · <span class="skname">niche-product-hunter</span><div class="skdesc">Săn &amp; xếp hạng ngách/sản phẩm DTC.</div></div></li>
+      <li><div><span class="skname">greenlight-run</span><div class="skdesc">Chấm GO/REFINE/REWORK/KILL — cổng validate.</div></div></li>
+      <li><div><span class="skname">avatar-research</span> · <span class="skname">quick-market-research</span><div class="skdesc">Mining voice-of-customer, pain/desire, ad angle.</div></div></li>
+      <li><div><span class="skname">brand-builder</span><div class="skdesc">Brand kit đầy đủ cho brand mới.</div></div></li>
+      <li><div><span class="skname">pid-to-store</span><div class="skdesc">Biến pid GO/REFINE thành BUILD-KIT (homepage + PDP + prompt ảnh/video).</div></div></li>
+      <li><div><span class="skname">product-pdp-image-builder</span> · <span class="skname">dtc-infographic-generator</span><div class="skdesc">Gallery PDP 9 ảnh + infographic/logo.</div></div></li>
+      <li><div><span class="skname">audit-to-des-html</span> · <span class="skname">clone-link-to-my-shopify</span> · <span class="skname">ads-landing-builder</span><div class="skdesc">Description HTML, clone trang mẫu, landing page cold traffic.</div></div></li>
+    </ul>
+
+    <h3 class="accent-l">Launch — creative &amp; test</h3>
+    <ul class="check">
+      <li><div><span class="skname">hook-tester</span><div class="skdesc">Hệ thống test hook Angle-First + kill/scale rule.</div></div></li>
+      <li><div><span class="skname">marketing:email-sequence</span> · <span class="skname">marketing:campaign-plan</span><div class="skdesc">Email flow &amp; kế hoạch campaign.</div></div></li>
+    </ul>
+
+    <h3 class="accent-o">Optimize &amp; Scale</h3>
+    <ul class="check">
+      <li><div><span class="skname">store-intel</span><div class="skdesc">Mổ competitor từ WinningHunter → HTML report.</div></div></li>
+      <li><div><span class="skname">marketing:brand-review</span> · <span class="skname">marketing:performance-report</span> · <span class="skname">marketing:competitive-brief</span><div class="skdesc">QA voice, báo cáo hiệu suất, battlecard đối thủ.</div></div></li>
+    </ul>
+
+    <h3>Tiện ích &amp; xuất bản</h3>
+    <ul class="check">
+      <li><div><span class="skname">schedule</span> · <span class="skname">morning</span><div class="skdesc">Đặt task tự động &amp; morning brief.</div></div></li>
+      <li><div><span class="skname">skill-creator</span> · <span class="skname">prompt-master</span><div class="skdesc">Tạo/sửa skill; tối ưu prompt cho tool AI.</div></div></li>
+      <li><div><span class="skname">docx</span> · <span class="skname">pptx</span> · <span class="skname">xlsx</span> · <span class="skname">pdf</span><div class="skdesc">Xuất báo cáo / deck / sheet cho team &amp; Human.</div></div></li>
+    </ul>
+
+    <h3>MCP cần kết nối</h3>
+    <p class="lead"><span class="status on" style="margin:0 4px">Đã kết nối</span> = dùng ngay · <span class="status auth" style="margin:0 4px">Cần authorize</span> = phải đăng nhập OAuth ở phần Connectors của claude.ai trước.</p>
+    <div class="mcp"><div class="name">Shopify <small>Store, sản phẩm, collection, đơn, tồn kho, ShopifyQL, GraphQL</small></div><span class="status on">Đã kết nối</span></div>
+    <div class="mcp"><div class="name">WinningHunter <small>Product/ad research, FB ads, store-intel, track brand/store, daily radar</small></div><span class="status on">Đã kết nối</span></div>
+    <div class="mcp"><div class="name">Notion <small>State sống: Dropship Pipeline (Kanban) + Human Tasks</small></div><span class="status on">Đã kết nối</span></div>
+    <div class="mcp"><div class="name">Higgsfield <small>Sinh ảnh/video/audio, upscale, remove-bg, virality predictor</small></div><span class="status on">Đã kết nối</span></div>
+    <div class="mcp"><div class="name">Google Drive / Box · Gmail · Canva / Figma <small>Đọc–ghi file folder, email vận hành, đọc/sửa design</small></div><span class="status on">Đã kết nối</span></div>
+    <div class="mcp"><div class="name">Klaviyo · Amplitude · Supermetrics · HubSpot · Ahrefs · SimilarWeb · Slack <small>Email/SMS · analytics · gộp số ads · CRM · SEO · traffic intel · thông báo team</small></div><span class="status auth">Cần authorize</span></div>
+    <div class="note warn">🔐 <b>Authorize thế nào:</b> vào <b>claude.ai → Settings → Connectors</b>, kết nối từng server cần dùng. Chưa authorize thì tool tương ứng chưa gọi được.</div>
+    <div class="note rule">🗂️ Skill riêng của hệ thống (orchestrator 10-workflow) nằm ngay trong folder: <span class="mono">SKILL.md</span>. Không cần cài — agent đọc trực tiếp khi folder được mở trong Cowork.</div>
+  </div>
+</section>
+
+<!-- CHIA SẺ SKILL -->
+<section id="chiase">
+  <div class="wrap">
+    <h2><span class="num">§</span>Chia sẻ skill mới — vòng làm giàu playbook</h2>
+    <p class="lead">Đây là phần khiến playbook "sống": ai làm ra một skill/template tốt cho dự án của mình đều có thể đưa vào folder chung để cả team dùng và update playbook.</p>
+    <div class="steps">
+      <div class="step"><b>Tạo skill.</b> Dùng <span class="mono">skill-creator</span> để đóng gói quy trình bạn hay lặp lại thành 1 skill (có <span class="mono">SKILL.md</span> + hướng dẫn). Test cho chạy ổn trên dự án của bạn.</div>
+      <div class="step"><b>Bỏ vào kho chung.</b> Lưu skill vào folder <span class="mono">skills/</span> hoặc chia sẻ file <span class="mono">.skill</span>. Thêm 1 dòng mô tả: skill làm gì, dùng ở workflow nào, input/output.</div>
+      <div class="step"><b>Update playbook.</b> Thêm skill vào đúng thẻ WF (mục "Skill/tool") và vào mục <a href="#khoso">Kho skill</a>. Bump ghi chú thay đổi để cả team biết có gì mới.</div>
+      <div class="step"><b>Báo team.</b> Ping ở kênh chung (Slack/Notion) kèm 1 ví dụ dùng. Từ đó mọi người cài và áp dụng ngay.</div>
+    </div>
+    <div class="grid g2">
+      <div class="card"><h4>✅ Skill tốt để chia sẻ</h4><p>Quy trình lặp lại nhiều, có input/output rõ, đã chạy thật ≥ 1 lần. Ví dụ: "sinh naming campaign", "chấm supplier tự động", "brief đối thủ theo ngách".</p></div>
+      <div class="card"><h4>✗ Chưa nên chia sẻ vội</h4><p>Prompt xài một lần, chưa test, hoặc trùng skill đã có. Ưu tiên cải tiến skill sẵn có hơn là tạo bản trùng.</p></div>
+    </div>
+    <div class="note rule">🔁 <b>Nguyên tắc:</b> kiến thức và tay nghề của team phải nằm trong folder — không nằm trong đầu một người. Skill mới = tài sản chung; playbook là nơi ghi lại "team hiện có những gì".</div>
+  </div>
+</section>
+
+<!-- PLUGIN -->
+<section id="plugin">
+  <div class="wrap">
+    <h2><span class="num">§</span>Đóng gói plugin &amp; cài lên Claude</h2>
+    <p class="lead">Có 2 mức chia sẻ: gửi <b>1 skill lẻ</b> (nhanh), hoặc gộp nhiều skill + lệnh + MCP thành <b>1 plugin</b> để cả team cài một phát. Chọn mức phù hợp với thứ bạn muốn chia sẻ.</p>
+
+    <h3>Mức 1 — Chia sẻ 1 skill lẻ (.skill)</h3>
+    <div class="steps">
+      <div class="step"><b>Chuẩn bị folder skill.</b> Một folder chứa <span class="mono">SKILL.md</span> (mô tả + hướng dẫn) và các file phụ trợ nếu có.</div>
+      <div class="step"><b>Nén thành file .skill.</b> Zip folder đó lại và đổi đuôi thành <span class="mono">.skill</span> (vd <span class="mono">niche-hunter.skill</span>). Trong Cowork, khi trình bày file này sẽ hiện nút <b>"Save skill"</b>.</div>
+      <div class="step"><b>Người nhận bấm "Save skill".</b> Skill được cài vào Claude của họ và dùng được ngay ở lần chat sau.</div>
+    </div>
+
+    <h3>Mức 2 — Đóng gói nhiều thứ thành 1 plugin</h3>
+    <p class="lead">Plugin là 1 bundle gồm skills, slash-commands và cấu hình MCP. Cấu trúc thư mục chuẩn:</p>
+    <pre><span class="c"># cấu trúc plugin</span>
+omegason-dropship/
+├── .claude-plugin/
+│   └── plugin.json        <span class="c"># manifest bắt buộc</span>
+├── skills/                <span class="c"># mỗi skill 1 folder có SKILL.md</span>
+│   ├── niche-hunter/
+│   ├── greenlight-run/
+│   └── pid-to-store/
+├── commands/              <span class="c"># (tuỳ chọn) slash-command .md</span>
+└── .mcp.json              <span class="c"># (tuỳ chọn) khai báo MCP server</span></pre>
+    <pre><span class="c"># .claude-plugin/plugin.json</span>
+{
+  <span class="k">"name"</span>: <span class="g">"omegason-dropship"</span>,
+  <span class="k">"version"</span>: <span class="g">"1.0.0"</span>,
+  <span class="k">"description"</span>: <span class="g">"Bộ skill dropship dùng chung của Omegason"</span>,
+  <span class="k">"author"</span>: { <span class="k">"name"</span>: <span class="g">"Omegason"</span> }
+}</pre>
+
+    <h3>Phát hành qua marketplace (để cả team cài chung)</h3>
+    <p class="lead">Đưa plugin lên 1 git repo và thêm file marketplace ở gốc repo:</p>
+    <pre><span class="c"># .claude-plugin/marketplace.json (ở repo marketplace)</span>
+{
+  <span class="k">"name"</span>: <span class="g">"omegason"</span>,
+  <span class="k">"owner"</span>: { <span class="k">"name"</span>: <span class="g">"Omegason"</span> },
+  <span class="k">"plugins"</span>: [
+    { <span class="k">"name"</span>: <span class="g">"omegason-dropship"</span>, <span class="k">"source"</span>: <span class="g">"./omegason-dropship"</span> }
+  ]
+}</pre>
+
+    <h3>Cài lên Claude</h3>
+    <div class="steps">
+      <div class="step"><b>Mở trình quản lý plugin.</b> Gõ <span class="mono">/plugin</span> trong phiên Claude (Cowork / Claude Code) để mở Plugin Manager.</div>
+      <div class="step"><b>Thêm marketplace của team.</b> <span class="cmd" style="margin:6px 0;display:block">/plugin marketplace add &lt;github-org&gt;/&lt;repo&gt;</span> Trỏ tới repo chứa <span class="mono">marketplace.json</span>.</div>
+      <div class="step"><b>Cài plugin.</b> <span class="cmd" style="margin:6px 0;display:block">/plugin install omegason-dropship@omegason</span> Sau khi cài, mọi skill/lệnh trong plugin dùng được ngay.</div>
+      <div class="step"><b>Cập nhật khi có bản mới.</b> Bump <span class="mono">version</span> trong <span class="mono">plugin.json</span>, push lên repo; team chạy lại <span class="mono">/plugin</span> để update.</div>
+    </div>
+    <div class="note rule">🧩 <b>Khi nào dùng mức nào:</b> chia sẻ nhanh 1 tay nghề → gửi file <span class="mono">.skill</span>. Muốn chuẩn hoá cả bộ đồ nghề cho toàn team (nhiều skill + lệnh + MCP, có versioning) → đóng gói <b>plugin</b> và phát hành qua marketplace.</div>
+    <div class="note warn">🔐 MCP đi kèm plugin (khai trong <span class="mono">.mcp.json</span>) vẫn cần mỗi người <b>authorize</b> riêng ở claude.ai → Connectors trước khi gọi được tool.</div>
+  </div>
+</section>
+
+<!-- SỬA Ở ĐÂU -->
+<section id="sua">
+  <div class="wrap">
+    <h2><span class="num">§</span>Khi cần chỉnh — sửa ở đâu?</h2>
+    <p class="lead">Nguyên tắc: <b>sửa đúng 1 nguồn</b>, mọi agent tự cập nhật. Đừng dặn miệng trong chat.</p>
+    <table>
+      <tr><th>Muốn đổi…</th><th>Sửa file này</th><th>Ai sửa</th></tr>
+      <tr><td>Ngưỡng số (margin, ROAS, kill/scale, budget test)</td><td><span class="mono">config/thresholds.yaml</span></td><td>Human</td></tr>
+      <tr><td>Quy trình 1 bước cụ thể</td><td><span class="mono">workflows/0X-*.md</span></td><td>Lead / Process</td></tr>
+      <tr><td>Luật chung (approval, owner, handoff, ID)</td><td><span class="mono">_shared-rules.md</span></td><td>Human</td></tr>
+      <tr><td>Routing / bản đồ tool</td><td><span class="mono">SKILL.md</span></td><td>Lead</td></tr>
+      <tr><td>Mẫu output cho người đọc</td><td><span class="mono">templates/*.md</span></td><td>Store Admin</td></tr>
+      <tr><td>Kiến thức đã học (buyer/creative/supplier)</td><td><span class="mono">knowledge/*.md</span> (append-only)</td><td>Agent + review người</td></tr>
+      <tr><td>Trạng thái sản phẩm / việc chờ duyệt</td><td><b>Notion</b> — Dropship Pipeline / Human Tasks</td><td>Agent qua <code>notion-update-page</code></td></tr>
+      <tr><td>Thêm/sửa skill dùng chung</td><td><span class="mono">skills/</span> + mục Kho skill của playbook</td><td>Người tạo + Lead review</td></tr>
+    </table>
+
+    <h3>Ví dụ: nới ngưỡng scale từ 1.6 → 1.8</h3>
+    <pre><span class="c"># config/thresholds.yaml</span>
+economics:
+  min_gross_margin_pct: <span class="k">60</span>
+  min_roas: <span class="k">1.4</span>
+scaling:
+  scale_roas: <span class="g">1.8</span>   <span class="c"># ← sửa số này thôi. Mọi Decision Gate WF 09 tự dùng giá trị mới.</span></pre>
+
+    <div class="grid g2" style="margin-top:16px">
+      <div class="card"><h4>✅ Nên</h4><p>Sửa file nguồn → nói agent <span class="mono">"reload thresholds"</span> / chạy lại bước. Ghi lý do vào decision-log.</p></div>
+      <div class="card"><h4>✗ Tránh</h4><p>Hardcode số trong workflow, dặn miệng ngưỡng mới trong chat, hoặc cố sửa <span class="mono">pipeline-status.md</span> (không ghi đè được — cập nhật Notion thay thế).</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- LỆNH -->
+<section id="lenh">
+  <div class="wrap">
+    <h2><span class="num">§</span>Câu lệnh mẫu để điều khiển hệ thống</h2>
+    <p class="lead">Nói theo mẫu này để agent routing đúng. Luôn kèm <b>pid</b> + <b>bước</b> + <b>dữ liệu mới</b> (nếu có).</p>
+    <div class="cmd">Check pipeline  → trạng thái mọi pid từ Notion</div>
+    <div class="cmd">Chạy bước tiếp cho pid-0001  → agent tra status → gọi đúng workflow</div>
+    <div class="cmd">Greenlight pid-0008 lại sau khi rework offer  → re-score greenlight-run</div>
+    <div class="cmd">Daily brief cho các store live  → Workflow 08 cho mọi pid live</div>
+    <div class="cmd">Đề xuất KILL/KEEP/SCALE tuần này  → Workflow 09 theo thresholds.yaml</div>
+    <div class="cmd">Handoff pid-0002 sang dựng store  → pid-to-store → BUILD-KIT</div>
+
+    <h3>Checklist khởi động phiên</h3>
+    <ul class="check">
+      <li>Agent đã đọc Notion Dropship Pipeline + Human Tasks?</li>
+      <li>Có Approval Request nào đang chờ Human? Xử lý trước.</li>
+      <li><span class="mono">thresholds.yaml</span> còn đúng chiến lược tuần này?</li>
+      <li>Mỗi pid <b>live</b> đã có daily brief chưa?</li>
+      <li>Mỗi pid <b>killed</b> đã có learning-record chưa?</li>
+      <li>Kết phiên: agent cập nhật Notion + record của pid, KHÔNG sửa pipeline-status.md.</li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    Omegason · Agent Operator Playbook · Khung làm việc chung · Human-in-the-loop · Người duyệt cuối: Human<br>
+    Nguồn sự thật: SKILL.md · _shared-rules.md · config/thresholds.yaml · knowledge/ · Notion (Dropship Pipeline + Human Tasks)
+  </div>
+</footer>
+
+</body>
+</html>

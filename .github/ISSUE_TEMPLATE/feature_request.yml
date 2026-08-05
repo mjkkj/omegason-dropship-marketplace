@@ -1,0 +1,9 @@
+name: "💡 Đề xuất tính năng"
+description: Ý tưởng cải tiến cho repo/plugin (không phải một skill cụ thể).
+title: "[feature] "
+labels: ["feature"]
+body:
+  - type: textarea
+    id: idea
+    attributes: { label: Ý tưởng & vấn đề nó giải quyết }
+    validations: { required: true }

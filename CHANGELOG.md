@@ -1,0 +1,15 @@
+# Changelog
+
+Định dạng theo [Keep a Changelog](https://keepachangelog.com/vi/1.1.0/); phiên bản theo [SemVer](https://semver.org/lang/vi/).
+
+## [Unreleased]
+### Added
+- Nền tảng open-source: LICENSE (MIT), CONTRIBUTING, CODE_OF_CONDUCT, SECURITY, ROADMAP.
+- Issue/PR templates cho đóng góp skill, yêu cầu chỉnh sửa, báo lỗi, đề xuất tính năng.
+- CI `validate.yml`: kiểm plugin + sinh catalog trên mỗi PR.
+- `scripts/validate_plugin.py`, `scripts/generate_catalog.py`, `SKILLS.md`.
+- `docs/`: playbook HTML + mẫu skill.
+
+## [1.0.0] - 2026-08-05
+### Added
+- Plugin `omegason-dropship`: orchestrator 10 workflow + 29 skill + command `/greenlight`.

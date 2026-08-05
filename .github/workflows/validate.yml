@@ -1,0 +1,17 @@
+name: Validate
+on:
+  push: { branches: [main] }
+  pull_request:
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - name: Validate plugin & scan secrets
+        run: python3 scripts/validate_plugin.py
+      - name: Kiểm tra SKILLS.md đã cập nhật
+        run: |
+          python3 scripts/generate_catalog.py
+          git diff --exit-code SKILLS.md || (echo "::error::SKILLS.md chưa cập nhật. Chạy scripts/generate_catalog.py và commit lại." && exit 1)

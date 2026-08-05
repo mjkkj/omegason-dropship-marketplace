@@ -1,0 +1,17 @@
+name: "✏️ Yêu cầu chỉnh sửa"
+description: Đề nghị sửa một skill / workflow / ngưỡng số có sẵn.
+title: "[edit] "
+labels: ["edit-request"]
+body:
+  - type: input
+    id: target
+    attributes: { label: Sửa cái gì?, placeholder: "vd: skills/hook-tester hoặc config/thresholds.yaml" }
+    validations: { required: true }
+  - type: textarea
+    id: current
+    attributes: { label: Hiện tại đang ra sao? }
+    validations: { required: true }
+  - type: textarea
+    id: desired
+    attributes: { label: Muốn đổi thành gì? Vì sao? }
+    validations: { required: true }

@@ -1,0 +1,30 @@
+name: "🧩 Đóng góp / đề xuất skill"
+description: Đề xuất một skill mới cho plugin (hoặc báo bạn đang làm).
+title: "[skill] "
+labels: ["skill"]
+body:
+  - type: input
+    id: name
+    attributes: { label: Tên skill (kebab-case), placeholder: vd tiktok-hook-finder }
+    validations: { required: true }
+  - type: textarea
+    id: purpose
+    attributes: { label: Skill làm gì?, description: Mục tiêu + input/output. }
+    validations: { required: true }
+  - type: input
+    id: trigger
+    attributes: { label: Khi nào Claude nên kích hoạt?, placeholder: "vd: khi user nói 'tìm hook tiktok'" }
+    validations: { required: true }
+  - type: input
+    id: workflow
+    attributes: { label: Dùng ở workflow nào?, placeholder: "vd: 06 Creative" }
+  - type: input
+    id: mcp
+    attributes: { label: Cần MCP nào không?, placeholder: "vd: WinningHunter" }
+  - type: checkboxes
+    id: status
+    attributes:
+      label: Trạng thái
+      options:
+        - label: Tôi sẽ tự làm và gửi PR
+        - label: Tôi chỉ đề xuất, nhờ người khác làm

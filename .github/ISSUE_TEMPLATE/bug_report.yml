@@ -1,0 +1,16 @@
+name: "🐞 Báo lỗi"
+description: Skill/plugin chạy sai hoặc không như mong đợi.
+title: "[bug] "
+labels: ["bug"]
+body:
+  - type: input
+    id: skill
+    attributes: { label: Skill/khu vực gặp lỗi }
+    validations: { required: true }
+  - type: textarea
+    id: steps
+    attributes: { label: Các bước tái hiện + kết quả mong đợi vs thực tế }
+    validations: { required: true }
+  - type: input
+    id: env
+    attributes: { label: Môi trường, placeholder: "Cowork / Claude Code, hệ máy" }
