@@ -4,6 +4,8 @@
 
 ## [Unreleased]
 ### Changed
+- `docs/index.html`: đổi sang landing phong cách ecom homepage (hero, product-card grid, CTA cài plugin). Bản tài liệu chi tiết chuyển thành `docs/playbook-classic.html`.
+### Changed
 - `docs/index.html`: cập nhật playbook v4 — thêm section Creative Strategy Hậu Andromeda, 3 skill creative (matrix-planner/bigger-swings/ad-clone-adapt), MCP Gethookd, đa kênh, plugin trỏ repo thật.
 
 ## [1.3.0] - 2026-08-06
