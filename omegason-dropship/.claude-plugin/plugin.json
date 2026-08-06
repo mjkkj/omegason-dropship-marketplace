@@ -1,6 +1,6 @@
 {
   "name": "omegason-dropship",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "Bộ skill dropship dùng chung của Omegason — orchestrator 10 workflow (research → validation → supplier → offer → store → creative → launch → optimize → kill/keep/scale → learning), human-in-the-loop.",
   "author": {
     "name": "Omegason"

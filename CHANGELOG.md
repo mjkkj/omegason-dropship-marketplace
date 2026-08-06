@@ -4,6 +4,10 @@
 
 ## [Unreleased]
 
+## [1.3.0] - 2026-08-06
+### Added
+- Skill `bigger-swings-writer`: viết concept/hook/kịch bản/ad copy đa dạng thật (chống lazy iteration) cho WF 06.
+
 ## [1.2.0] - 2026-08-06
 ### Added
 - Skill `creative-matrix-planner`: ma trận đa dạng 4 trụ + quota volume/win-rate, xuất batch concept brief cho WF 06.
