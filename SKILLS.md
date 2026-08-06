@@ -1,6 +1,6 @@
 # Catalog Skill
 
-> Tự sinh bởi `scripts/generate_catalog.py`. Tổng: **30 skill**. Đừng sửa tay.
+> Tự sinh bởi `scripts/generate_catalog.py`. Tổng: **31 skill**. Đừng sửa tay.
 
 | Skill | Mô tả |
 |---|---|
@@ -10,6 +10,7 @@
 | `avatar-research` | Deep avatar research for any product. Mines Amazon reviews, Reddit, YouTube comments, and Quora/forums. Returns structured bullet points like a $100M Faceboo... |
 | `brand-builder` | Build a complete, investor-grade brand kit for any DTC e-commerce brand — from strategy through 9-month execution plan — delivered as structured .md files. U... |
 | `clone-link-to-my-shopify` | Given ANY URL or uploaded HTML/JSX file, faithfully replicate the entire landing page as a Shopify product page that LOOKS like the source — same DOM structu... |
+| `creative-matrix-planner` | Từ một pid, dựng Ma trận Đa dạng Sáng tạo 4 trụ (Visual × Messaging × Persona × Format) và quota sản xuất theo bài toán volume/win-rate, rồi xuất một BATCH c... |
 | `docx` | "Use this skill whenever the user wants to create, read, edit, or manipulate Word documents (.docx files) or Word templates (.dotx files). Triggers include: ... |
 | `dropship-orchestrator` | Điều phối 10 workflow Full-Stack Dropshipping từ research đến learning. Kích hoạt khi user nói về pipeline sản phẩm, "sản phẩm này đang ở bước nào", "chạy bư... |
 | `dtc-infographic-generator` | Generate brand logos and DTC product-page infographics using Google's Banana Pro (Nano Banana Pro / Gemini 2.5 Flash Image) via Google AI Studio or the AI St... |

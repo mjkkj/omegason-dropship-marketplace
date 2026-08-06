@@ -4,6 +4,10 @@
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-08-06
+### Added
+- Skill `creative-matrix-planner`: ma trận đa dạng 4 trụ + quota volume/win-rate, xuất batch concept brief cho WF 06.
+
 ## [1.1.0] - 2026-08-06
 ### Added
 - Skill `ad-clone-adapt`: Replicate & Adapt mẫu quảng cáo thắng (Gethookd MCP + Higgsfield) cho WF 06.
