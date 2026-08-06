@@ -577,5 +577,168 @@
   </div>
 </footer>
 
+<!-- INFO TOOLTIPS (injected) -->
+<style>
+  .has-tip{cursor:help}
+  .has-tip:hover{outline:2px solid rgba(79,70,229,.4);outline-offset:1px;border-radius:5px}
+  #infotip{position:fixed;z-index:99999;max-width:330px;background:#0d0f1c;color:#eef1f8;
+    padding:11px 13px;border-radius:11px;font-size:12.5px;line-height:1.55;
+    box-shadow:0 12px 30px rgba(10,12,25,.4);pointer-events:none;opacity:0;
+    transform:translateY(4px);transition:opacity .12s,transform .12s}
+  #infotip.on{opacity:1;transform:translateY(0)}
+  #infotip .nm{font-family:'SFMono-Regular',Consolas,Menlo,monospace;font-weight:800;color:#c7d2fe;word-break:break-word}
+  #infotip .tp{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;
+    background:rgba(199,210,254,.15);color:#c7d2fe;padding:1px 7px;border-radius:6px;margin-left:6px;vertical-align:middle}
+  #infotip .w{display:block;margin-top:6px}
+  #infotip .r{display:block;margin-top:4px;color:#86efac}
+  #infotip .r b,#infotip .w b{color:#fff;font-weight:700}
+</style>
+<script>
+(function(){
+  var D = {
+  "niche-hunter":{"t":"Skill","w":"Săn & xếp hạng ngách/sản phẩm DTC.","r":"WF 01 — tìm ngách mới."},
+  "niche-product-hunter":{"t":"Skill","w":"Tìm sản phẩm thắng trong 1 ngách (one-time + subscription).","r":"WF 01."},
+  "greenlight-run":{"t":"Skill","w":"Chấm GO/REFINE/REWORK/KILL + hồ sơ pid.","r":"WF 02."},
+  "avatar-research":{"t":"Skill","w":"Đào voice-of-customer, pain/desire, persona, ad angle.","r":"WF 04 & 06."},
+  "quick-market-research":{"t":"Skill","w":"Báo cáo nhanh đối thủ + ngôn ngữ khách.","r":"WF 04."},
+  "brand-builder":{"t":"Skill","w":"Brand kit đầy đủ cho brand mới.","r":"WF 05."},
+  "pid-to-store":{"t":"Skill","w":"Biến pid GO thành BUILD-KIT (homepage+PDP+prompt).","r":"WF 05."},
+  "product-pdp-image-builder":{"t":"Skill","w":"Bộ 9 ảnh gallery PDP infographic.","r":"WF 05/06."},
+  "dtc-infographic-generator":{"t":"Skill","w":"Logo + ảnh infographic kiểu FB ad.","r":"WF 05/06."},
+  "audit-to-des-html":{"t":"Skill","w":"Audit PDP → mô tả HTML dán vào Shopify.","r":"WF 05 & CRO."},
+  "clone-link-to-my-shopify":{"t":"Skill","w":"Clone 1 URL/landing thành trang Shopify.","r":"WF 05."},
+  "ads-landing-builder":{"t":"Skill","w":"Dựng landing/advertorial cold traffic.","r":"WF 05/06."},
+  "creative-matrix-planner":{"t":"Skill","w":"Ma trận đa dạng 4 trụ + quota → batch concept brief.","r":"WF 06."},
+  "bigger-swings-writer":{"t":"Skill","w":"Viết concept/hook/kịch bản đa dạng thật.","r":"WF 06."},
+  "ad-clone-adapt":{"t":"Skill","w":"Replicate & Adapt mẫu quảng cáo thắng đối thủ (Gethookd).","r":"WF 06."},
+  "hook-tester":{"t":"Skill","w":"Khung test hook Angle-First + kill/scale rule.","r":"WF 06/07."},
+  "store-intel":{"t":"Skill","w":"Mổ đối thủ từ WinningHunter → HTML report.","r":"WF 08."},
+  "marketing:email-sequence":{"t":"Skill","w":"Thiết kế email/SMS flow (welcome, cart, win-back).","r":"WF 06/07."},
+  "marketing:campaign-plan":{"t":"Skill","w":"Lập kế hoạch campaign + lịch nội dung.","r":"WF 06/07."},
+  "marketing:seo-audit":{"t":"Skill","w":"Audit SEO + keyword research.","r":"WF 06 (Google organic)."},
+  "marketing:draft-content":{"t":"Skill","w":"Viết blog/RSA/caption/social.","r":"WF 06."},
+  "marketing:brand-review":{"t":"Skill","w":"QA nội dung theo brand voice & guardrail.","r":"WF 08."},
+  "marketing:performance-report":{"t":"Skill","w":"Báo cáo hiệu suất marketing.","r":"WF 08."},
+  "marketing:competitive-brief":{"t":"Skill","w":"Battlecard & so sánh định vị đối thủ.","r":"WF 08."},
+  "schedule":{"t":"Skill","w":"Đặt task tự động định kỳ.","r":"Tiện ích."},
+  "morning":{"t":"Skill","w":"Morning brief dạng HTML.","r":"Tiện ích."},
+  "skill-creator":{"t":"Skill","w":"Tạo/sửa/eval skill.","r":"Khi đóng gói quy trình mới."},
+  "prompt-master":{"t":"Skill","w":"Tối ưu prompt cho tool AI.","r":"Khi cần prompt LLM/ảnh/video."},
+  "docx":{"t":"Skill","w":"Tạo/sửa file Word.","r":"Cần .docx."},
+  "pptx":{"t":"Skill","w":"Tạo/sửa slide.","r":"Cần .pptx."},
+  "xlsx":{"t":"Skill","w":"Tạo/sửa spreadsheet.","r":"Cần .xlsx/.csv."},
+  "pdf":{"t":"Skill","w":"Tạo/đọc/xử lý PDF.","r":"Cần .pdf."},
+
+  "config/thresholds.yaml":{"t":"File","w":"Nguồn sự thật DUY NHẤT cho mọi ngưỡng số (margin, ROAS, kill/scale, budget).","r":"Sửa ở đây → mọi Decision Gate tự áp."},
+  "thresholds.yaml":{"t":"File","w":"Nguồn sự thật cho mọi ngưỡng số. Sửa 1 chỗ, mọi agent dùng.","r":"WF 09 & mọi cổng."},
+  "SKILL.md":{"t":"File","w":"Orchestrator: routing trạng thái→workflow + bản đồ tool.","r":"Agent đọc đầu mỗi phiên."},
+  "_shared-rules.md":{"t":"File","w":"Luật chung: owner, approval, failure, handoff, ID.","r":"Áp mọi workflow."},
+  "pipeline-status.md":{"t":"File","w":"Ảnh chụp lịch sử pipeline — KHÔNG phải state sống (state ở Notion).","r":"Chỉ tham khảo."},
+  "products/pid-XXXX/":{"t":"Thư mục","w":"Hồ sơ 1 sản phẩm: record.yaml + output các bước.","r":"Mỗi pid 1 folder."},
+  "workflows/0X-*.md":{"t":"File","w":"10 file quy trình chi tiết từng bước.","r":"Sửa khi đổi quy trình 1 bước."},
+  "templates/*.md":{"t":"Thư mục","w":"Mẫu output cho người đọc (brief, checklist, scorecard).","r":""},
+  "knowledge/":{"t":"Thư mục","w":"Kho learning tích luỹ (append-only) — tài sản compound.","r":"Ghi ở WF 10."},
+  "knowledge/*.md":{"t":"Thư mục","w":"Các file learning: buyer/creative/supplier/benchmark/guardrail.","r":"Append-only."},
+  "knowledge/buyer-language-library.md":{"t":"File","w":"Pain/desire/objection thật của khách.","r":"WF 04/06."},
+  "knowledge/creative-learning-library.md":{"t":"File","w":"Angle/hook đã thắng hoặc đã fail.","r":"WF 06/10."},
+  "knowledge/supplier-history.md":{"t":"File","w":"Supplier đã dùng + đánh giá.","r":"WF 03."},
+  "templates/product-candidate-template.md":{"t":"File","w":"Mẫu hồ sơ sản phẩm ứng viên.","r":"WF 01."},
+  "templates/validation-scorecard.md":{"t":"File","w":"Mẫu chấm điểm validation.","r":"WF 02."},
+  "templates/supplier-comparison.md":{"t":"File","w":"Bảng so sánh supplier.","r":"WF 03."},
+  "templates/unit-economics-template.md":{"t":"File","w":"Bảng tính giá vốn / biên / breakeven.","r":"WF 04."},
+  "offer-package-template.md":{"t":"File","w":"Mẫu đóng gói offer.","r":"WF 04."},
+  "templates/store-qa-checklist.md":{"t":"File","w":"Checklist QA trước khi publish store.","r":"WF 05."},
+  "templates/campaign-launch-checklist.md":{"t":"File","w":"Checklist cấu hình launch copy-paste.","r":"WF 07."},
+  "templates/daily-performance-brief.md":{"t":"File","w":"Mẫu brief hiệu suất hằng ngày.","r":"WF 08."},
+  "templates/decision-record.md":{"t":"File","w":"Mẫu ghi quyết định KILL/KEEP/SCALE.","r":"WF 09."},
+  "templates/learning-record.md":{"t":"File","w":"Mẫu ghi bài học sau test.","r":"WF 10."},
+  "unit-economics":{"t":"File","w":"Bảng tính giá vốn/biên/breakeven.","r":"WF 04."},
+  "validation-scorecard":{"t":"File","w":"Mẫu chấm điểm validation.","r":"WF 02."},
+  "supplier-history":{"t":"File","w":"Supplier đã dùng + đánh giá.","r":"WF 03."},
+  "daily-performance-brief":{"t":"File","w":"Mẫu brief hiệu suất hằng ngày.","r":"WF 08."},
+  "decision-record":{"t":"File","w":"Mẫu ghi quyết định KILL/KEEP/SCALE.","r":"WF 09."},
+  "learning-record":{"t":"File","w":"Mẫu ghi bài học sau test.","r":"WF 10."},
+  "campaign-launch-checklist":{"t":"File","w":"Checklist cấu hình launch copy-paste.","r":"WF 07."},
+
+  "creative":{"t":"Ngưỡng","w":"Mục ngưỡng creative trong thresholds.yaml: day-1 CTR/CPC, win rate, diversity.","r":""},
+  "cashflow":{"t":"Ngưỡng","w":"Mục ngưỡng dòng tiền: runway 60d, net margin 25%, supplier 20/30/50.","r":""},
+  "version":{"t":"Trường","w":"Số phiên bản plugin — bump khi thay đổi để team update.","r":""},
+
+  "brief_competitor":{"t":"Tool MCP","w":"WinningHunter: xem offer/ad đối thủ đang chạy.","r":"WF 04."},
+  "find_winning_products":{"t":"Tool MCP","w":"WinningHunter: tìm sản phẩm thắng.","r":"WF 01."},
+  "search_facebook_ads":{"t":"Tool MCP","w":"WinningHunter: tìm quảng cáo Facebook.","r":"WF 01/06."},
+  "get_tiktok_trending_products":{"t":"Tool MCP","w":"WinningHunter: sản phẩm trending TikTok.","r":"WF 01."},
+  "search_exploding_topics":{"t":"Tool MCP","w":"WinningHunter: chủ đề đang bùng nổ.","r":"WF 01."},
+  "daily_radar":{"t":"Tool MCP","w":"WinningHunter: radar winner/động thái mỗi ngày.","r":"WF 01 & scale."},
+  "creative_inspiration_pack":{"t":"Tool MCP","w":"WinningHunter: bộ cảm hứng creative từ ad thắng.","r":"WF 06."},
+  "get_ad_transcript":{"t":"Tool MCP","w":"WinningHunter: transcript video quảng cáo.","r":"WF 06."},
+  "search_tiktok_videos":{"t":"Tool MCP","w":"WinningHunter: tìm video TikTok.","r":"WF 06."},
+  "search_tiktok_*":{"t":"Tool MCP","w":"WinningHunter: nhóm tool tìm nội dung TikTok.","r":"WF 06."},
+  "track_brand":{"t":"Tool MCP","w":"WinningHunter: theo dõi 1 brand đối thủ (Meta).","r":"Scale."},
+  "track_store":{"t":"Tool MCP","w":"WinningHunter: theo dõi 1 store đối thủ.","r":"Scale."},
+  "create-product":{"t":"Tool MCP","w":"Shopify: tạo sản phẩm.","r":"WF 05."},
+  "update-product":{"t":"Tool MCP","w":"Shopify: cập nhật sản phẩm.","r":"WF 05."},
+  "get-inventory-levels":{"t":"Tool MCP","w":"Shopify: xem tồn kho.","r":"WF 08."},
+  "run-analytics-query":{"t":"Tool MCP","w":"Shopify: chạy ShopifyQL lấy số bán/doanh thu.","r":"WF 07/08/09."},
+  "list-orders":{"t":"Tool MCP","w":"Shopify: liệt kê đơn hàng.","r":"WF 08/09."},
+  "notion-update-page":{"t":"Tool MCP","w":"Notion: cập nhật trang/DB (state sống).","r":"Kết mỗi bước."},
+  "generate_video":{"t":"Tool MCP","w":"Higgsfield: sinh video.","r":"WF 06."},
+  "generate_image":{"t":"Tool MCP","w":"Higgsfield: sinh ảnh.","r":"WF 06."},
+  "virality_predictor":{"t":"Tool MCP","w":"Higgsfield: chấm khả năng viral của video.","r":"WF 06."},
+
+  "WinningHunter":{"t":"MCP","w":"Product/ad research, FB ads, store-intel, track brand/store.","r":"WF 01/06/08."},
+  "Shopify MCP":{"t":"MCP","w":"Store, sản phẩm, đơn, tồn kho, ShopifyQL, GraphQL.","r":"WF 05/08/09."},
+  "Higgsfield":{"t":"MCP","w":"Sinh ảnh/video/audio, upscale, virality predictor.","r":"WF 06."},
+  "Gethookd":{"t":"MCP","w":"Creative intel: search/transcribe ads, brand spy, clone ad.","r":"WF 06."},
+  "Meta Ads MCP":{"t":"MCP","w":"Launch & đọc số campaign Facebook/Instagram.","r":"WF 07–09."},
+
+  "/plugin":{"t":"Lệnh","w":"Mở Plugin Manager trong Claude.","r":""},
+  "/plugin marketplace add mjkkj/omegason-dropship-marketplace":{"t":"Lệnh","w":"Thêm marketplace của team.","r":"Cài lần đầu."},
+  "/plugin install omegason-dropship@omegason":{"t":"Lệnh","w":"Cài plugin (skill + workflow + command).","r":"Sau khi add marketplace."},
+  "Check pipeline":{"t":"Lệnh","w":"Xem trạng thái mọi pid từ Notion.","r":"Đầu phiên."},
+  "Chạy bước tiếp cho pid-0001":{"t":"Lệnh","w":"Agent tra status → gọi đúng workflow.","r":"Khi làm 1 pid."},
+  "reload thresholds":{"t":"Lệnh","w":"Nạp lại ngưỡng sau khi sửa thresholds.yaml.","r":"Sau khi đổi số."},
+
+  ".mcp.json":{"t":"File","w":"Khai báo MCP server đi kèm plugin.","r":""},
+  "plugin.json":{"t":"File","w":"Manifest plugin (name/version/description).","r":""},
+  "marketplace.json":{"t":"File","w":"Manifest marketplace (liệt kê plugin).","r":""},
+  ".skill":{"t":"File","w":"File nén 1 skill để chia sẻ (bấm Save skill).","r":""},
+  "niche-hunter.skill":{"t":"File","w":"Ví dụ file .skill để chia sẻ.","r":""},
+  "skills/":{"t":"Thư mục","w":"Chứa các skill trong plugin (mỗi folder có SKILL.md).","r":""},
+  "DRIVE full-stack-dropshipping-agent-system-all-md":{"t":"Folder","w":"Folder workspace mở trong Cowork — bộ não của hệ thống.","r":""},
+  "github.com/mjkkj/omegason-dropship-marketplace":{"t":"Repo","w":"Marketplace open-source của team.","r":""}
+}
+;
+  var tip=document.createElement('div'); tip.id='infotip'; document.body.appendChild(tip);
+  function look(t){
+    if(D[t]) return D[t];
+    var q=t.replace(/^["'“”]+|["'“”]+$/g,'');
+    if(D[q]) return D[q];
+    var lo=t.toLowerCase(); if(D[lo]) return D[lo];
+    return null;
+  }
+  function show(el,info){
+    var tp = info.t ? '<span class="tp">'+info.t+'</span>' : '';
+    var r = info.r ? '<span class="r"><b>Chạy:</b> '+info.r+'</span>' : '';
+    tip.innerHTML='<span class="nm">'+el.textContent.trim()+'</span>'+tp+
+      '<span class="w"><b>Việc:</b> '+info.w+'</span>'+r;
+    tip.classList.add('on');
+  }
+  function move(e){
+    var pad=14,w=tip.offsetWidth,h=tip.offsetHeight;
+    var x=e.clientX+pad,y=e.clientY+pad;
+    if(x+w>window.innerWidth-8)x=e.clientX-w-pad;
+    if(y+h>window.innerHeight-8)y=e.clientY-h-pad;
+    tip.style.left=Math.max(8,x)+'px';tip.style.top=Math.max(8,y)+'px';
+  }
+  document.querySelectorAll('.sk,.skname,.mono,.chip,.cmdrow code').forEach(function(el){
+    var info=look(el.textContent.trim()); if(!info) return;
+    el.classList.add('has-tip');
+    el.addEventListener('mouseenter',function(e){show(el,info);move(e);});
+    el.addEventListener('mousemove',move);
+    el.addEventListener('mouseleave',function(){tip.classList.remove('on');});
+  });
+})();
+</script>
 </body>
 </html>

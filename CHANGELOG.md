@@ -3,6 +3,8 @@
 Định dạng theo [Keep a Changelog](https://keepachangelog.com/vi/1.1.0/); phiên bản theo [SemVer](https://semver.org/lang/vi/).
 
 ## [Unreleased]
+### Added
+- Tooltip hover cho toàn bộ chip skill, tool MCP, file .md, thresholds, lệnh trong `docs/index.html` và `docs/playbook-classic.html` — hiện popup 'Việc / Chạy' để user đọc dễ hiểu.
 ### Changed
 - `docs/index.html`: đổi sang landing phong cách ecom homepage (hero, product-card grid, CTA cài plugin). Bản tài liệu chi tiết chuyển thành `docs/playbook-classic.html`.
 ### Changed
