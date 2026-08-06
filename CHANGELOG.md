@@ -3,6 +3,8 @@
 Định dạng theo [Keep a Changelog](https://keepachangelog.com/vi/1.1.0/); phiên bản theo [SemVer](https://semver.org/lang/vi/).
 
 ## [Unreleased]
+### Changed
+- `docs/index.html`: cập nhật playbook v4 — thêm section Creative Strategy Hậu Andromeda, 3 skill creative (matrix-planner/bigger-swings/ad-clone-adapt), MCP Gethookd, đa kênh, plugin trỏ repo thật.
 
 ## [1.3.0] - 2026-08-06
 ### Added
