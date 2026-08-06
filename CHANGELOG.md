@@ -3,6 +3,10 @@
 Định dạng theo [Keep a Changelog](https://keepachangelog.com/vi/1.1.0/); phiên bản theo [SemVer](https://semver.org/lang/vi/).
 
 ## [Unreleased]
+
+## [1.1.0] - 2026-08-06
+### Added
+- Skill `ad-clone-adapt`: Replicate & Adapt mẫu quảng cáo thắng (Gethookd MCP + Higgsfield) cho WF 06.
 ### Added
 - Nền tảng open-source: LICENSE (MIT), CONTRIBUTING, CODE_OF_CONDUCT, SECURITY, ROADMAP.
 - Issue/PR templates cho đóng góp skill, yêu cầu chỉnh sửa, báo lỗi, đề xuất tính năng.

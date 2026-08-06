@@ -1,9 +1,10 @@
 # Catalog Skill
 
-> Tự sinh bởi `scripts/generate_catalog.py`. Tổng: **29 skill**. Đừng sửa tay.
+> Tự sinh bởi `scripts/generate_catalog.py`. Tổng: **30 skill**. Đừng sửa tay.
 
 | Skill | Mô tả |
 |---|---|
+| `ad-clone-adapt` | Bắt một quảng cáo ĐANG THẮNG của đối thủ, giải mã nó, rồi ADAPT (không copy) thành creative cho brand/sản phẩm của mình theo triết lý "Replicate & Adapt" hậu... |
 | `ads-landing-builder` | Build a complete, ads-ready landing page HTML from any product input (URL, name, or images). Use this skill when the user asks to create a landing page, LP, ... |
 | `audit-to-des-html` | End-to-end workflow that audits a product page (PDP) and produces a drop-in editorial HTML description block ready to paste into the Shopify product descript... |
 | `avatar-research` | Deep avatar research for any product. Mines Amazon reviews, Reddit, YouTube comments, and Quora/forums. Returns structured bullet points like a $100M Faceboo... |
