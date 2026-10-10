@@ -4,7 +4,6 @@
 
 ## [Unreleased]
 ### Added
-- Skill `idea-to-silver-gold-product` (v2): ảnh sản phẩm → cặp mockup trang sức polished 18K gold + silver qua fal.ai (`nano-banana-2/edit`), kèm `scripts/frame.py` ép khung 30% + nền #FFFFFF tất định.
 - Tooltip hover cho toàn bộ chip skill, tool MCP, file .md, thresholds, lệnh trong `docs/index.html` và `docs/playbook-classic.html` — hiện popup 'Việc / Chạy' để user đọc dễ hiểu.
 ### Changed
 - `docs/index.html`: đổi sang landing phong cách ecom homepage (hero, product-card grid, CTA cài plugin). Bản tài liệu chi tiết chuyển thành `docs/playbook-classic.html`.
