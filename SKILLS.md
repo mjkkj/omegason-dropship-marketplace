@@ -1,6 +1,6 @@
 # Catalog Skill
 
-> Tự sinh bởi `scripts/generate_catalog.py`. Tổng: **32 skill**. Đừng sửa tay.
+> Tự sinh bởi `scripts/generate_catalog.py`. Tổng: **33 skill**. Đừng sửa tay.
 
 | Skill | Mô tả |
 |---|---|
@@ -17,6 +17,7 @@
 | `dtc-infographic-generator` | Generate brand logos and DTC product-page infographics using Google's Banana Pro (Nano Banana Pro / Gemini 2.5 Flash Image) via Google AI Studio or the AI St... |
 | `greenlight-run` | Chạy Greenlight Engine (pipeline 00→06) để đánh giá một sản phẩm dropship/DTC — ra verdict GO/REFINE/REWORK/KILL kèm bằng chứng, hồ sơ pid đầy đủ và đường-lê... |
 | `hook-tester` | Build a complete Meta Ads hook testing system for any DTC e-commerce brand — from hook library through testing framework to tracking dashboard — using the An... |
+| `idea-to-silver-gold-product` | Biến một hoặc nhiều ảnh của cùng một sản phẩm (nhẫn, mặt dây, charm, bông tai, tượng nhỏ, ý tưởng/screenshot sản phẩm) thành cặp ảnh mockup trang sức đúc lux... |
 | `marketing-brand-review` | Review content against your brand voice, style guide, and messaging pillars, flagging deviations by severity with specific before/after fixes. Use when check... |
 | `marketing-campaign-plan` | Generate a full campaign brief with objectives, audience, messaging, channel strategy, content calendar, and success metrics. Use when planning a product lau... |
 | `marketing-competitive-brief` | Research competitors and generate a positioning and messaging comparison with content gaps, opportunities, and threats. Use when building sales battlecards, ... |
